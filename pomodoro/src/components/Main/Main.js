@@ -7,7 +7,7 @@ const Main = () => {
       background="#DF645F"
       padding="20px 80px"
       alignItems="center"
-      borderRadius='10px'
+      borderRadius="10px"
     >
       <Flex gap="15px">
         <Button
@@ -44,13 +44,13 @@ const Main = () => {
           Long Break
         </Button>
       </Flex>
-      <Heading fontSize="120px" margin="20px 0px">
+      <Heading as="h2" fontSize="120px" margin="20px 0px">
         25:00
       </Heading>
       <Button
         fontSize="40px"
-        borderRadius='10px'
-        fontWeight='500'
+        borderRadius="10px"
+        fontWeight="500"
         width="200px"
         height="55px"
         background="white"
