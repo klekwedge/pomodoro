@@ -1,4 +1,9 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
+import {
+  AiOutlineSetting,
+  AiOutlineUser,
+  AiOutlineBarChart,
+} from "react-icons/ai";
 
 const Header = () => {
   return (
@@ -21,7 +26,10 @@ const Header = () => {
           background="#e1716d"
           fontSize="16px"
           cursor="pointer"
+          display="flex"
+          gap="5px"
         >
+          <AiOutlineBarChart size='20px'/>
           Report
         </Button>
         <Button
@@ -32,7 +40,10 @@ const Header = () => {
           background="#e1716d"
           fontSize="16px"
           cursor="pointer"
+          display="flex"
+          gap="5px"
         >
+          <AiOutlineSetting size='20px'/>
           Settings
         </Button>
         <Button
@@ -43,7 +54,10 @@ const Header = () => {
           background="#e1716d"
           fontSize="16px"
           cursor="pointer"
+          display="flex"
+          gap="5px"
         >
+          <AiOutlineUser size='20px'/>
           Login
         </Button>
       </Flex>

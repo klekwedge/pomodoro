@@ -1,4 +1,5 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
+import "./Main.scss";
 
 const Main = () => {
   return (
@@ -22,6 +23,7 @@ const Main = () => {
           Pomodoro
         </Button>
         <Button
+          className="main__option active"
           fontSize="18px"
           width="100px"
           height="28px"
@@ -33,6 +35,7 @@ const Main = () => {
           Short Break
         </Button>
         <Button
+          className="main__option"
           fontSize="18px"
           width="100px"
           height="28px"
@@ -48,10 +51,12 @@ const Main = () => {
         25:00
       </Heading>
       <Button
-        fontSize="40px"
+        className="main__option"
+        fontSize="30px"
+        padding='10px 20px'
         borderRadius="10px"
         fontWeight="500"
-        width="200px"
+        width="190px"
         height="55px"
         background="white"
         border="none"
