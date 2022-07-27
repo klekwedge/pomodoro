@@ -1,13 +1,4 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import "./Main.scss";
 
@@ -46,6 +37,33 @@ const Main = () => {
   //   }
   // }
 
+  const pomodoro = (e) => {
+    document.querySelector(".wrapper-page").classList.remove("green", "blue");
+    document.querySelector(".wrapper-page").classList.add("red");
+    document.querySelectorAll(".main__option").forEach((mainOption) => {
+      mainOption.classList.remove("active");
+    });
+    e.target.classList.add("active");
+  };
+
+  const shortBreak = (e) => {
+    document.querySelector(".wrapper-page").classList.remove("red", "blue");
+    document.querySelector(".wrapper-page").classList.add("green");
+    document.querySelectorAll(".main__option").forEach((mainOption) => {
+      mainOption.classList.remove("active");
+    });
+    e.target.classList.add("active");
+  };
+
+  const longBreak = (e) => {
+    document.querySelector(".wrapper-page").classList.remove("red", "green");
+    document.querySelector(".wrapper-page").classList.add("blue");
+    document.querySelectorAll(".main__option").forEach((mainOption) => {
+      mainOption.classList.remove("active");
+    });
+    e.target.classList.add("active");
+  };
+
   return (
     <Flex
       flexDirection="column"
@@ -53,6 +71,7 @@ const Main = () => {
       padding="20px 80px"
       alignItems="center"
       borderRadius="10px"
+      className="wrapper-main"
     >
       <Flex gap="15px">
         <Button
@@ -64,6 +83,8 @@ const Main = () => {
           border="none"
           color="white"
           cursor="pointer"
+          _hover={{ background: "#808080" }}
+          onClick={(e) => pomodoro(e)}
         >
           Pomodoro
         </Button>
@@ -76,6 +97,8 @@ const Main = () => {
           border="none"
           color="white"
           cursor="pointer"
+          _hover={{ background: "#808080" }}
+          onClick={(e) => shortBreak(e)}
         >
           Short Break
         </Button>
@@ -88,6 +111,8 @@ const Main = () => {
           border="none"
           color="white"
           cursor="pointer"
+          _hover={{ background: "#808080" }}
+          onClick={(e) => longBreak(e)}
         >
           Long Break
         </Button>
@@ -104,7 +129,7 @@ const Main = () => {
         </Heading>
       </Flex>
       <Button
-        className="main__option"
+        className="main__button"
         fontSize="30px"
         padding="10px 20px"
         borderRadius="10px"
@@ -113,8 +138,8 @@ const Main = () => {
         height="55px"
         background="white"
         border="none"
-        color="#DC665F"
         cursor="pointer"
+        color="#DB524D"
         onClick={(e) => test(e)}
       >
         {textContentButton}

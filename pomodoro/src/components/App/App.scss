@@ -1,0 +1,79 @@
+.wrapper-page {
+  transition: all 0.4s ease;
+
+  & .wrapper-main {
+    transition: all 0.4s ease;
+  }
+
+  & .main__button {
+    transition: all 0.4s ease;
+  }
+
+  & .main__option {
+    transition: all 0.4s ease;
+  }
+
+  & .header__option {
+    transition: all 0.4s ease;
+  }
+}
+
+.wrapper-page.red {
+  background: #db524d;
+
+  & .wrapper-main {
+    background: #df645f;
+  }
+
+  & .main__button {
+    color: #db524d;
+  }
+
+  & .main__option.active {
+    background: #be5551;
+  }
+
+  & .header__option {
+    background: #e1716d;
+  }
+}
+
+.wrapper-page.green {
+  background: #468e91;
+
+  & .wrapper-main {
+    background: #599a9c;
+  }
+
+  & .main__button {
+    color: #468e91;
+  }
+
+  & .main__option.active {
+    background: #4c8385;
+  }
+
+  & .header__option {
+    background: #67a2a5;
+  }
+}
+
+.wrapper-page.blue {
+  background: #437ea8;
+
+  & .wrapper-main {
+    background: #568bb1;
+  }
+
+  & .main__button {
+    color: #437ea8;
+  }
+
+  & .main__option.active {
+    background: #497697;
+  }
+
+  & .header__option {
+    background: #6595b8;
+  }
+}

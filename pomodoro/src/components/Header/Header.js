@@ -1,9 +1,4 @@
-import {
-  Flex,
-  Button,
-  Heading,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Flex, Button, Heading, useDisclosure } from "@chakra-ui/react";
 
 import {
   AiOutlineSetting,
@@ -11,7 +6,7 @@ import {
   AiOutlineCheckCircle,
 } from "react-icons/ai";
 
-import Report from '../Report/Report';
+import Report from "../Report/Report";
 import Settings from "../Settings/Settings";
 
 const Header = () => {
@@ -45,11 +40,11 @@ const Header = () => {
 
         <Flex gap="10px">
           <Button
+            className="header__option"
             borderRadius="10px"
             color="white"
             padding="10px 10px"
             border="none"
-            background="#e1716d"
             fontSize="16px"
             cursor="pointer"
             display="flex"
@@ -62,11 +57,11 @@ const Header = () => {
           </Button>
 
           <Button
+            className="header__option"
             borderRadius="10px"
             color="white"
             padding="10px 10px"
             border="none"
-            background="#e1716d"
             fontSize="16px"
             cursor="pointer"
             display="flex"
@@ -79,15 +74,9 @@ const Header = () => {
         </Flex>
       </Flex>
 
-      <Report
-        isOpenReport={isOpenReport}
-        onCloseReport={onCloseReport}
-      />
+      <Report isOpenReport={isOpenReport} onCloseReport={onCloseReport} />
 
-      <Settings
-        isOpenSetting={isOpenSetting}
-        onCloseSetting={onCloseSetting}
-      />
+      <Settings isOpenSetting={isOpenSetting} onCloseSetting={onCloseSetting} />
     </>
   );
 };

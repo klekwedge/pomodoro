@@ -1,5 +1,5 @@
 import { Flex, ChakraProvider } from "@chakra-ui/react";
-import "./App.css";
+import "./App.scss";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -9,6 +9,7 @@ function App() {
   return (
     <ChakraProvider>
       <Flex
+        className="wrapper-page red"
         flexDirection="column"
         gap="20px"
         background="#db524d"
