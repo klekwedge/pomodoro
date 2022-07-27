@@ -18,13 +18,21 @@ import {
   AiOutlineClockCircle,
   AiOutlineCalendar,
   AiOutlineFire,
+  AiOutlineCheckCircle,
 } from "react-icons/ai";
+import Settings from "../Settings/Settings";
 
 const Header = () => {
   const {
     isOpen: isOpenReport,
     onOpen: onOpenReport,
     onClose: onCloseReport,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenSetting,
+    onOpen: onOpenSetting,
+    onClose: onCloseSetting,
   } = useDisclosure();
 
   return (
@@ -36,9 +44,13 @@ const Header = () => {
         gap="200px"
         justifyContent="space-between"
       >
-        <Heading margin="0" paddint="0">
-          Pomodoro
-        </Heading>
+        <Flex gap="5px" alignItems="center">
+          <AiOutlineCheckCircle size="30px" />
+          <Heading margin="0" paddint="0" fontSize="30px">
+            Pomodoro
+          </Heading>
+        </Flex>
+
         <Flex gap="10px">
           <Button
             borderRadius="10px"
@@ -67,6 +79,7 @@ const Header = () => {
             cursor="pointer"
             display="flex"
             gap="5px"
+            onClick={onOpenSetting}
           >
             <AiOutlineSetting size="20px" />
             Settings
@@ -80,12 +93,17 @@ const Header = () => {
           <ModalCloseButton />
           <ModalBody padding="50px 30px 50px 30px">
             <Tabs>
-              <TabList borderRadius='5px' border="1px solid #E7AFAD" height="40px" mb="20px">
+              <TabList
+                borderRadius="5px"
+                border="1px solid #E7AFAD"
+                height="40px"
+                mb="20px"
+              >
                 <Tab
                   _selected={{ color: "white", bg: "#E19B99" }}
                   color="#E19B99"
                   width="50%"
-                  borderRadius='5px 0px 0px 5px'
+                  borderRadius="5px 0px 0px 5px"
                 >
                   Summary
                 </Tab>
@@ -93,7 +111,7 @@ const Header = () => {
                   _selected={{ color: "white", bg: "#E19B99" }}
                   color="#E19B99"
                   width="50%"
-                  borderRadius='0px 5px 5px 0px'
+                  borderRadius="0px 5px 5px 0px"
                 >
                   Detail
                 </Tab>
@@ -185,6 +203,10 @@ const Header = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <Settings
+        isOpenSetting={isOpenSetting}
+        onCloseSetting={onCloseSetting}
+      />
     </>
   );
 };
