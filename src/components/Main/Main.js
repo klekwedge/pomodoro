@@ -36,7 +36,6 @@ const Main = ({ wrapperPageRef }) => {
 
       setTextContentButton("Stop");
       timerId = setInterval(countdownTimer, 1000);
-  
     } else if (textContentButton === "Stop") {
       console.log("!");
       setTextContentButton("Start");
@@ -73,6 +72,10 @@ const Main = ({ wrapperPageRef }) => {
       mainOption.classList.remove("active");
     });
     e.target.classList.add("active");
+
+    if (textContentButton === "Stop") {
+      console.log("!");
+    }
     setFocusTime(25);
     setMode("focus");
   };
