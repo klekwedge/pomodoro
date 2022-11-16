@@ -1,8 +1,10 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
 import { useRef, useState } from "react";
+import useCountdown from "../../hooks/useCountdown";
+import ButtonTab from "../ButtonTab/ButtonTab";
 import "./Main.scss";
 
-const Main = ({ wrapperPageRef }) => {
+const Main = ({ wrapperPageRef }: any) => {
   const [textContentButton, setTextContentButton] = useState("Start");
 
   const [focusTime, setFocusTime] = useState(25);
@@ -15,6 +17,14 @@ const Main = ({ wrapperPageRef }) => {
 
   let timerId = null;
   let deadline = null;
+
+  const { start, stop, reset } = useCountdown({
+    minutes: 25,
+  });
+
+  console.log(start);
+  console.log(stop);
+  console.log(reset);
 
   const startTimer = () => {
     if (textContentButton === "Start") {
@@ -73,36 +83,33 @@ const Main = ({ wrapperPageRef }) => {
     });
     e.target.classList.add("active");
 
-    if (textContentButton === "Stop") {
-      console.log("!");
-    }
     setFocusTime(25);
     setMode("focus");
   };
 
-  const shortBreak = (e) => {
-    wrapperPageRef.current.classList.remove("red", "blue");
-    wrapperPageRef.current.classList.add("green");
+  // const shortBreak = (e) => {
+  //   wrapperPageRef.current.classList.remove("red", "blue");
+  //   wrapperPageRef.current.classList.add("green");
 
-    document.querySelectorAll(".main__option").forEach((mainOption) => {
-      mainOption.classList.remove("active");
-    });
-    e.target.classList.add("active");
-    setShortBreakTime(5);
-    setMode("shortBreak");
-  };
+  //   document.querySelectorAll(".main__option").forEach((mainOption) => {
+  //     mainOption.classList.remove("active");
+  //   });
+  //   e.target.classList.add("active");
+  //   setShortBreakTime(5);
+  //   setMode("shortBreak");
+  // };
 
-  const longBreak = (e) => {
-    wrapperPageRef.current.classList.remove("red", "green");
-    wrapperPageRef.current.classList.add("blue");
+  // const longBreak = (e) => {
+  //   wrapperPageRef.current.classList.remove("red", "green");
+  //   wrapperPageRef.current.classList.add("blue");
 
-    document.querySelectorAll(".main__option").forEach((mainOption) => {
-      mainOption.classList.remove("active");
-    });
-    e.target.classList.add("active");
-    setLongBreakTime(15);
-    setMode("longBreak");
-  };
+  //   document.querySelectorAll(".main__option").forEach((mainOption) => {
+  //     mainOption.classList.remove("active");
+  //   });
+  //   e.target.classList.add("active");
+  //   setLongBreakTime(15);
+  //   setMode("longBreak");
+  // };
 
   let currentTIme;
 
@@ -130,48 +137,12 @@ const Main = ({ wrapperPageRef }) => {
       className="wrapper-main"
     >
       <Flex gap="15px">
-        <Button
-          className="main__option active"
-          fontSize="18px"
-          width="100px"
-          height="28px"
-          background="transparent"
-          border="none"
-          color="white"
-          cursor="pointer"
-          _hover={{ background: "#808080" }}
-          onClick={(e) => pomodoro(e)}
-        >
-          Pomodoro
-        </Button>
-        <Button
-          className="main__option"
-          fontSize="18px"
-          width="100px"
-          height="28px"
-          background="transparent"
-          border="none"
-          color="white"
-          cursor="pointer"
-          _hover={{ background: "#808080" }}
-          onClick={(e) => shortBreak(e)}
-        >
+        {/* active */}
+        <ButtonTab clickHandler={pomodoro}> Pomodoro</ButtonTab>
+        {/* <ButtonTab clickHandler={shortBreak}>
           Short Break
-        </Button>
-        <Button
-          className="main__option"
-          fontSize="18px"
-          width="100px"
-          height="28px"
-          background="transparent"
-          border="none"
-          color="white"
-          cursor="pointer"
-          _hover={{ background: "#808080" }}
-          onClick={(e) => longBreak(e)}
-        >
-          Long Break
-        </Button>
+        </ButtonTab>
+        <ButtonTab clickHandler={longBreak}> Long Break</ButtonTab> */}
       </Flex>
       <Flex gap="10px" alignItems="center">
         <Heading as="h3" fontSize="120px" margin="20px 0px" ref={minutesRef}>
