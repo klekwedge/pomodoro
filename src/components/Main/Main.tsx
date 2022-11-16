@@ -1,77 +1,104 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useCountdown from "../../hooks/useCountdown";
 import ButtonTab from "../ButtonTab/ButtonTab";
 import "./Main.scss";
 
+dayjs.extend(duration);
+
 const Main = ({ wrapperPageRef }: any) => {
   const [textContentButton, setTextContentButton] = useState("Start");
 
-  const [focusTime, setFocusTime] = useState(25);
+  const [focusTime, setFocusTime] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(focusTime * 60);
   const [shortBreakTime, setShortBreakTime] = useState(5);
   const [longBreakTime, setLongBreakTime] = useState(15);
   const [mode, setMode] = useState("focus");
+  const [progress, setProgress] = useState(0);
 
   const minutesRef = useRef();
   const secondsRef = useRef();
 
-  let timerId = null;
-  let deadline = null;
+  // let timerId = null;
+  let timer: any;
+  const updateCount = () => {
+    if (textContentButton === "Stop") {
+      timer = !timer && setInterval(countdownTimer, 1000);
+    }
 
-  const { start, stop, reset } = useCountdown({
-    minutes: 25,
-  });
-
-  console.log(start);
-  console.log(stop);
-  console.log(reset);
-
-  const startTimer = () => {
     if (textContentButton === "Start") {
-      deadline = new Date();
-
-      switch (mode) {
-        case "focus":
-          deadline.setMinutes(deadline.getMinutes() + focusTime);
-          break;
-        case "shortBreak":
-          deadline.setMinutes(deadline.getMinutes() + shortBreakTime);
-          break;
-        case "longBreak":
-          deadline.setMinutes(deadline.getMinutes() + longBreakTime);
-          break;
-        default:
-          deadline.setMinutes(deadline.getMinutes() + focusTime);
-      }
-
-      setTextContentButton("Stop");
-      timerId = setInterval(countdownTimer, 1000);
-    } else if (textContentButton === "Stop") {
-      console.log("!");
-      setTextContentButton("Start");
-      clearInterval(timerId);
+      clearInterval(timer);
     }
   };
 
+  useEffect(() => {
+    updateCount();
+
+    return () => clearInterval(timer);
+  }, [textContentButton]);
+
+  const startTimer = () => {
+    if (textContentButton === "Start") {
+      switch (mode) {
+        case "focus":
+          // deadline.setMinutes(deadline.getMinutes() + focusTime);
+          break;
+        case "shortBreak":
+          // deadline.setMinutes(deadline.getMinutes() + shortBreakTime);
+          break;
+        case "longBreak":
+          // deadline.setMinutes(deadline.getMinutes() + longBreakTime);
+          break;
+        default:
+        // deadline.setMinutes(deadline.getMinutes() + focusTime);
+      }
+
+      setTextContentButton("Stop");
+    } else if (textContentButton === "Stop") {
+      // console.log("!");
+      // setTextContentButton("Start");
+      // clearInterval(timerId);
+    }
+  };
+
+  function formatTime(time: any) {
+    return dayjs.duration(time, "seconds").format("mm:ss");
+  }
+
+
   function countdownTimer() {
-    const diff = deadline - new Date();
+    // const diff = deadline - new Date();
 
-    if (diff <= 0) {
-      clearInterval(timerId);
-    }
+    // if (diff <= 0) {
+    //   clearInterval(timerId);
+    // }
 
-    const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
-    const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
+    // const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+    // const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
 
-    console.log(minutes);
-    console.log(seconds);
+    // console.log(minutes);
+    // console.log(seconds);
 
-    if (minutesRef.current) {
-      minutesRef.current.textContent = minutes < 10 ? "0" + minutes : minutes;
-    }
-    if (secondsRef.current) {
-      secondsRef.current.textContent = seconds < 10 ? "0" + seconds : seconds;
-    }
+    // if (minutesRef.current) {
+    //   minutesRef.current.textContent = minutes < 10 ? "0" + minutes : minutes;
+    // }
+    // if (secondsRef.current) {
+    //   secondsRef.current.textContent = seconds < 10 ? "0" + seconds : seconds;
+    // }
+
+
+
+    setTimeLeft((prev) => prev - 1);
+    setProgress((prev) => prev + 1);
+
+    // if (minutesRef.current) {
+    //   minutesRef.current.textContent = (progress / timeLeft) * 100;
+    // }
+    // if (secondsRef.current) {
+    //   secondsRef.current.textContent = (progress / timeLeft) * 100;
+    // }
   }
 
   const pomodoro = (e) => {
