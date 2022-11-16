@@ -33,7 +33,7 @@ const Header = () => {
       >
         <Flex gap="5px" alignItems="center">
           <AiOutlineCheckCircle size="30px" />
-          <Heading margin="0" paddint="0" fontSize="30px">
+          <Heading margin="0" padding="0" fontSize="30px">
             Pomodoro
           </Heading>
         </Flex>
@@ -50,7 +50,7 @@ const Header = () => {
             display="flex"
             gap="5px"
             onClick={onOpenReport}
-            _hover="none"
+            // _hover="none"
           >
             <AiOutlineBarChart size="20px" />
             Report

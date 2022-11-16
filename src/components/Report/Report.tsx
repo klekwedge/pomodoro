@@ -17,7 +17,7 @@ import {
   AiOutlineFire,
 } from "react-icons/ai";
 
-const Report = ({ isOpenReport, onCloseReport }) => {
+const Report = ({ isOpenReport, onCloseReport }: any) => {
   return (
     <Modal isOpen={isOpenReport} onClose={onCloseReport}>
       <ModalOverlay />
@@ -119,7 +119,7 @@ const Report = ({ isOpenReport, onCloseReport }) => {
                     <Heading as="h4" fontSize="14px" fontWeight="400">
                       DATE
                     </Heading>
-                    <Heading as="Аh4" fontSize="14px" fontWeight="400">
+                    <Heading as="h4" fontSize="14px" fontWeight="400">
                       MINUTES
                     </Heading>
                   </Flex>
