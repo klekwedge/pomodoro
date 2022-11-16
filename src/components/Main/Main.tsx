@@ -79,7 +79,7 @@ const Main = ({ wrapperPageRef }: any) => {
     });
     e.target.classList.add("active");
 
-    setMode(e.target.dataset.color);
+    setMode(e.target.dataset.mode);
   };
 
   return (
