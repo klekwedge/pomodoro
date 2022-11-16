@@ -10,25 +10,40 @@ dayjs.extend(duration);
 
 const Main = ({ wrapperPageRef }: any) => {
   const [textContentButton, setTextContentButton] = useState("Start");
-  const [focusTime, setFocusTime] = useState(30);
-  const [timeLeft, setTimeLeft] = useState(focusTime * 60);
-  const [shortBreakTime, setShortBreakTime] = useState(5);
-  const [longBreakTime, setLongBreakTime] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(25);
   const [mode, setMode] = useState("focus");
   const [progress, setProgress] = useState(0);
 
   let timer: any;
 
-  function countdownTimer() {
+  useEffect(() => {
+    switch (mode) {
+      case "focus":
+        setTimeLeft(30 * 60);
+        break;
+      case "shortBreak":
+        setTimeLeft(5 * 60);
+        break;
+      case "longBreak":
+        setTimeLeft(15 * 60);
+        break;
+      default:
+        setTimeLeft(30 * 60);
+        break;
+    }
+  }, [mode]);
+
+  const countdownTimer = () => {
+    console.log(timeLeft);
     if (timeLeft !== 0) {
       setTimeLeft((prev) => prev - 1);
       setProgress((prev) => prev + 1);
     }
-  }
+  };
 
   const updateCount = () => {
     if (textContentButton === "Stop") {
-      timer = !timer && setInterval(countdownTimer, 1000);
+      timer = !timer && setInterval(() => countdownTimer(), 1000);
     }
 
     if (textContentButton === "Start") {
@@ -41,13 +56,15 @@ const Main = ({ wrapperPageRef }: any) => {
     return () => clearInterval(timer);
   }, [textContentButton]);
 
-  const startTimer = () => {
+  const startTimer = (e) => {
     if (textContentButton === "Start") {
       setTextContentButton("Stop");
     } else if (textContentButton === "Stop") {
       setTextContentButton("Start");
     }
   };
+
+  // setTextContentButton("Stop");
 
   function formatTime(time: any) {
     return dayjs.duration(time, "seconds").format("mm:ss");
@@ -62,49 +79,31 @@ const Main = ({ wrapperPageRef }: any) => {
     });
     e.target.classList.add("active");
 
-    setFocusTime(25);
     setMode("focus");
   };
 
-  // const shortBreak = (e) => {
-  //   wrapperPageRef.current.classList.remove("red", "blue");
-  //   wrapperPageRef.current.classList.add("green");
+  const shortBreak = (e) => {
+    wrapperPageRef.current.classList.remove("red", "blue");
+    wrapperPageRef.current.classList.add("green");
 
-  //   document.querySelectorAll(".main__option").forEach((mainOption) => {
-  //     mainOption.classList.remove("active");
-  //   });
-  //   e.target.classList.add("active");
-  //   setShortBreakTime(5);
-  //   setMode("shortBreak");
-  // };
+    document.querySelectorAll(".main__option").forEach((mainOption) => {
+      mainOption.classList.remove("active");
+    });
+    e.target.classList.add("active");
 
-  // const longBreak = (e) => {
-  //   wrapperPageRef.current.classList.remove("red", "green");
-  //   wrapperPageRef.current.classList.add("blue");
+    setMode("shortBreak");
+  };
 
-  //   document.querySelectorAll(".main__option").forEach((mainOption) => {
-  //     mainOption.classList.remove("active");
-  //   });
-  //   e.target.classList.add("active");
-  //   setLongBreakTime(15);
-  //   setMode("longBreak");
-  // };
+  const longBreak = (e) => {
+    wrapperPageRef.current.classList.remove("red", "green");
+    wrapperPageRef.current.classList.add("blue");
 
-  let currentTIme;
-
-  switch (mode) {
-    case "focus":
-      currentTIme = focusTime;
-      break;
-    case "shortBreak":
-      currentTIme = shortBreakTime;
-      break;
-    case "longBreak":
-      currentTIme = longBreakTime;
-      break;
-    default:
-      currentTIme = focusTime;
-  }
+    document.querySelectorAll(".main__option").forEach((mainOption) => {
+      mainOption.classList.remove("active");
+    });
+    e.target.classList.add("active");
+    setMode("longBreak");
+  };
 
   return (
     <Flex
@@ -116,12 +115,9 @@ const Main = ({ wrapperPageRef }: any) => {
       className="wrapper-main"
     >
       <Flex gap="15px">
-        {/* active */}
         <ButtonTab clickHandler={pomodoro}> Pomodoro</ButtonTab>
-        {/* <ButtonTab clickHandler={shortBreak}>
-          Short Break
-        </ButtonTab>
-        <ButtonTab clickHandler={longBreak}> Long Break</ButtonTab> */}
+        <ButtonTab clickHandler={shortBreak}>Short Break</ButtonTab>
+        <ButtonTab clickHandler={longBreak}> Long Break</ButtonTab>
       </Flex>
       <Heading as="h3" fontSize="120px" margin="20px 0px">
         {formatTime(timeLeft)}
@@ -138,7 +134,9 @@ const Main = ({ wrapperPageRef }: any) => {
         border="none"
         cursor="pointer"
         color="#DB524D"
-        onClick={(e) => startTimer(e)}
+        onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+          startTimer(e)
+        }
       >
         {textContentButton}
       </Button>
