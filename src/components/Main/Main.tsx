@@ -10,7 +10,6 @@ dayjs.extend(duration);
 
 const Main = ({ wrapperPageRef }: any) => {
   const [textContentButton, setTextContentButton] = useState("Start");
-
   const [focusTime, setFocusTime] = useState(30);
   const [timeLeft, setTimeLeft] = useState(focusTime * 60);
   const [shortBreakTime, setShortBreakTime] = useState(5);
@@ -18,11 +17,15 @@ const Main = ({ wrapperPageRef }: any) => {
   const [mode, setMode] = useState("focus");
   const [progress, setProgress] = useState(0);
 
-  const minutesRef = useRef();
-  const secondsRef = useRef();
-
-  // let timerId = null;
   let timer: any;
+
+  function countdownTimer() {
+    if (timeLeft !== 0) {
+      setTimeLeft((prev) => prev - 1);
+      setProgress((prev) => prev + 1);
+    }
+  }
+
   const updateCount = () => {
     if (textContentButton === "Stop") {
       timer = !timer && setInterval(countdownTimer, 1000);
@@ -35,70 +38,19 @@ const Main = ({ wrapperPageRef }: any) => {
 
   useEffect(() => {
     updateCount();
-
     return () => clearInterval(timer);
   }, [textContentButton]);
 
   const startTimer = () => {
     if (textContentButton === "Start") {
-      switch (mode) {
-        case "focus":
-          // deadline.setMinutes(deadline.getMinutes() + focusTime);
-          break;
-        case "shortBreak":
-          // deadline.setMinutes(deadline.getMinutes() + shortBreakTime);
-          break;
-        case "longBreak":
-          // deadline.setMinutes(deadline.getMinutes() + longBreakTime);
-          break;
-        default:
-        // deadline.setMinutes(deadline.getMinutes() + focusTime);
-      }
-
       setTextContentButton("Stop");
     } else if (textContentButton === "Stop") {
-      // console.log("!");
-      // setTextContentButton("Start");
-      // clearInterval(timerId);
+      setTextContentButton("Start");
     }
   };
 
   function formatTime(time: any) {
     return dayjs.duration(time, "seconds").format("mm:ss");
-  }
-
-
-  function countdownTimer() {
-    // const diff = deadline - new Date();
-
-    // if (diff <= 0) {
-    //   clearInterval(timerId);
-    // }
-
-    // const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
-    // const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
-
-    // console.log(minutes);
-    // console.log(seconds);
-
-    // if (minutesRef.current) {
-    //   minutesRef.current.textContent = minutes < 10 ? "0" + minutes : minutes;
-    // }
-    // if (secondsRef.current) {
-    //   secondsRef.current.textContent = seconds < 10 ? "0" + seconds : seconds;
-    // }
-
-
-
-    setTimeLeft((prev) => prev - 1);
-    setProgress((prev) => prev + 1);
-
-    // if (minutesRef.current) {
-    //   minutesRef.current.textContent = (progress / timeLeft) * 100;
-    // }
-    // if (secondsRef.current) {
-    //   secondsRef.current.textContent = (progress / timeLeft) * 100;
-    // }
   }
 
   const pomodoro = (e) => {
@@ -171,17 +123,9 @@ const Main = ({ wrapperPageRef }: any) => {
         </ButtonTab>
         <ButtonTab clickHandler={longBreak}> Long Break</ButtonTab> */}
       </Flex>
-      <Flex gap="10px" alignItems="center">
-        <Heading as="h3" fontSize="120px" margin="20px 0px" ref={minutesRef}>
-          {currentTIme > 10 ? currentTIme : `0${currentTIme}`}
-        </Heading>
-        <Heading as="h3" fontSize="120px" margin="20px 0px">
-          :
-        </Heading>
-        <Heading as="h3" fontSize="120px" margin="20px 0px" ref={secondsRef}>
-          00
-        </Heading>
-      </Flex>
+      <Heading as="h3" fontSize="120px" margin="20px 0px">
+        {formatTime(timeLeft)}
+      </Heading>
       <Button
         className="main__button"
         fontSize="30px"
