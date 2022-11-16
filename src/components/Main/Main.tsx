@@ -70,39 +70,16 @@ const Main = ({ wrapperPageRef }: any) => {
     return dayjs.duration(time, "seconds").format("mm:ss");
   }
 
-  const pomodoro = (e) => {
-    wrapperPageRef.current.classList.remove("green", "blue");
-    wrapperPageRef.current.classList.add("red");
+  const changeMode = (e) => {
+    wrapperPageRef.current.classList.remove("green", "blue", "red");
+    wrapperPageRef.current.classList.add(e.target.dataset.color);
 
     document.querySelectorAll(".main__option").forEach((mainOption) => {
       mainOption.classList.remove("active");
     });
     e.target.classList.add("active");
 
-    setMode("focus");
-  };
-
-  const shortBreak = (e) => {
-    wrapperPageRef.current.classList.remove("red", "blue");
-    wrapperPageRef.current.classList.add("green");
-
-    document.querySelectorAll(".main__option").forEach((mainOption) => {
-      mainOption.classList.remove("active");
-    });
-    e.target.classList.add("active");
-
-    setMode("shortBreak");
-  };
-
-  const longBreak = (e) => {
-    wrapperPageRef.current.classList.remove("red", "green");
-    wrapperPageRef.current.classList.add("blue");
-
-    document.querySelectorAll(".main__option").forEach((mainOption) => {
-      mainOption.classList.remove("active");
-    });
-    e.target.classList.add("active");
-    setMode("longBreak");
+    setMode(e.target.dataset.color);
   };
 
   return (
@@ -115,9 +92,16 @@ const Main = ({ wrapperPageRef }: any) => {
       className="wrapper-main"
     >
       <Flex gap="15px">
-        <ButtonTab clickHandler={pomodoro}> Pomodoro</ButtonTab>
-        <ButtonTab clickHandler={shortBreak}>Short Break</ButtonTab>
-        <ButtonTab clickHandler={longBreak}> Long Break</ButtonTab>
+        <ButtonTab mode="focus" color="red" clickHandler={changeMode}>
+          Pomodoro
+        </ButtonTab>
+        <ButtonTab mode="shortBreak" color="green" clickHandler={changeMode}>
+          Short Break
+        </ButtonTab>
+        <ButtonTab mode="longBreak" color="blue" clickHandler={changeMode}>
+          {" "}
+          Long Break
+        </ButtonTab>
       </Flex>
       <Heading as="h3" fontSize="120px" margin="20px 0px">
         {formatTime(timeLeft)}

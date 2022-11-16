@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 
-export default function ButtonTab({ clickHandler, children }: any) {
+export default function ButtonTab({ clickHandler, children, color, mode }: any) {
   return (
     <Button
       className="main__option"
@@ -11,6 +11,8 @@ export default function ButtonTab({ clickHandler, children }: any) {
       border="none"
       color="white"
       cursor="pointer"
+      data-color={color}
+      data-mode={mode}
       _hover={{ background: "#808080" }}
       onClick={(e) => clickHandler(e)}
     >
