@@ -1,7 +1,8 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ButtonHTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
+import { updateFavicon } from "../../hooks/useChangeFavicon";
 import useCountdown from "../../hooks/useCountdown";
 import ButtonTab from "../ButtonTab/ButtonTab";
 import "./Main.scss";
@@ -17,6 +18,11 @@ const Main = ({ wrapperPageRef }: any) => {
   let timer: any;
 
   useEffect(() => {
+    document.querySelector(".main__option")?.classList.add("active");
+  }, []);
+
+  useEffect(() => {
+    updateFavicon(mode);
     switch (mode) {
       case "focus":
         setTimeLeft(30 * 60);
@@ -34,7 +40,6 @@ const Main = ({ wrapperPageRef }: any) => {
   }, [mode]);
 
   const countdownTimer = () => {
-    console.log(timeLeft);
     if (timeLeft !== 0) {
       setTimeLeft((prev) => prev - 1);
       setProgress((prev) => prev + 1);
@@ -56,7 +61,8 @@ const Main = ({ wrapperPageRef }: any) => {
     return () => clearInterval(timer);
   }, [textContentButton]);
 
-  const startTimer = (e) => {
+  const toggleTimer = () => {
+    console.log('!');
     if (textContentButton === "Start") {
       setTextContentButton("Stop");
     } else if (textContentButton === "Stop") {
@@ -64,13 +70,12 @@ const Main = ({ wrapperPageRef }: any) => {
     }
   };
 
-  // setTextContentButton("Stop");
-
   function formatTime(time: any) {
     return dayjs.duration(time, "seconds").format("mm:ss");
   }
 
   const changeMode = (e) => {
+    setTextContentButton("Start");
     wrapperPageRef.current.classList.remove("green", "blue", "red");
     wrapperPageRef.current.classList.add(e.target.dataset.color);
 
@@ -99,7 +104,6 @@ const Main = ({ wrapperPageRef }: any) => {
           Short Break
         </ButtonTab>
         <ButtonTab mode="longBreak" color="blue" clickHandler={changeMode}>
-          {" "}
           Long Break
         </ButtonTab>
       </Flex>
@@ -118,9 +122,7 @@ const Main = ({ wrapperPageRef }: any) => {
         border="none"
         cursor="pointer"
         color="#DB524D"
-        onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-          startTimer(e)
-        }
+        onClick={() => toggleTimer()}
       >
         {textContentButton}
       </Button>
