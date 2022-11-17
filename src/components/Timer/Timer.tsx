@@ -1,10 +1,11 @@
-import { Flex, Button, Heading } from "@chakra-ui/react";
+import { Flex, Button, Heading, Box } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
 import ButtonTab from "../ButtonTab/ButtonTab";
+import { AiFillStepForward } from "react-icons/ai";
 import "./Timer.scss";
 
 dayjs.extend(duration);
@@ -112,22 +113,40 @@ const Timer = ({ wrapperPageRef }: any) => {
       <Heading as="h3" fontSize="120px" margin="20px 0px">
         {formatTime(timeLeft)}
       </Heading>
-      <Button
-        className="main__button"
-        fontSize="30px"
-        padding="10px 20px"
-        borderRadius="10px"
-        fontWeight="500"
-        width="190px"
-        height="55px"
-        background="white"
-        border="none"
-        cursor="pointer"
-        color="#DB524D"
-        onClick={() => toggleTimer()}
-      >
-        {textContentButton}
-      </Button>
+      <Box position="relative">
+        <Button
+          className="main__button"
+          fontSize="30px"
+          padding="10px 20px"
+          borderRadius="10px"
+          fontWeight="500"
+          width="190px"
+          height="55px"
+          background="white"
+          border="none"
+          cursor="pointer"
+          color="#DB524D"
+          onClick={() => toggleTimer()}
+        >
+          {textContentButton}
+        </Button>
+        {textContentButton === "Stop" ? (
+          <Button
+            position="absolute"
+            top="50%"
+            transform="translateY(-50%)"
+            right="-90px"
+            background="transparent"
+            fontSize="30px"
+            cursor="pointer"
+            _hover={{ background: "transparent" }}
+            _focus={{ background: "transparent" }}
+            // onClick={() => toggleTimer()}
+          >
+            <AiFillStepForward />
+          </Button>
+        ) : null}
+      </Box>
     </Flex>
   );
 };
