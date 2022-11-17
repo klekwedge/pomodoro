@@ -45,7 +45,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
 
   function handler(e) {
     e.preventDefault();
-    // console.log(e.target[0].value);
+    console.log(e.target[0].value);
     // console.log(e.target[1]);
     // console.log(e.target[2]);
     dispatch(changeFocusTime(+e.target[0].value));
@@ -179,7 +179,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
                 id="long-break-interval"
                 defaultValue={4}
                 min={1}
-                max={60}
+                max={12}
                 maxWidth="100px"
               >
                 <NumberInputField />

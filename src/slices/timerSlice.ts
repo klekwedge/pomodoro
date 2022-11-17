@@ -1,9 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TimerState } from "./timerSlice.types";
 
-const initialState = {
+const initialState: TimerState = {
   focusTime: 25,
   shortBreakTime: 5,
   longBreakTime: 15,
+  autoStartBreaks: false,
+  autoStartPomodoros: false,
+  longBreakInterval: 4,
+  alarmSound: "digital",
+  alarmVolume: 50,
+  repeat: 1,
+  tickingSound: "none",
+  tickingVolume: 50,
 };
 
 const timerSlice = createSlice({
