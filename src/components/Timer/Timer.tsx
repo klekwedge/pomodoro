@@ -5,11 +5,11 @@ import { ButtonHTMLAttributes, useCallback, useEffect, useRef, useState } from "
 import { updateFavicon } from "../../hooks/useChangeFavicon";
 import useCountdown from "../../hooks/useCountdown";
 import ButtonTab from "../ButtonTab/ButtonTab";
-import "./Main.scss";
+import "./Timer.scss";
 
 dayjs.extend(duration);
 
-const Main = ({ wrapperPageRef }: any) => {
+const Timer = ({ wrapperPageRef }: any) => {
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(25);
   const [mode, setMode] = useState("focus");
@@ -129,4 +129,4 @@ const Main = ({ wrapperPageRef }: any) => {
     </Flex>
   );
 };
-export default Main;
+export default Timer;
