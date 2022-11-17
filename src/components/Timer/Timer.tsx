@@ -2,7 +2,7 @@ import { Flex, Button, Heading } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
+import { useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
 import ButtonTab from "../ButtonTab/ButtonTab";
 import "./Timer.scss";
@@ -10,16 +10,14 @@ import "./Timer.scss";
 dayjs.extend(duration);
 
 const Timer = ({ wrapperPageRef }: any) => {
-  const dispatch = useAppDispatch();
   const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
     (state) => state.timer
   );
 
   const [textContentButton, setTextContentButton] = useState("Start");
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [timeLeft, setTimeLeft] = useState(0);
   const [mode, setMode] = useState("focus");
   // const [progress, setProgress] = useState(0);
-
   let timer: any;
 
   useEffect(() => {
@@ -42,7 +40,7 @@ const Timer = ({ wrapperPageRef }: any) => {
         setTimeLeft(focusTime * 60);
         break;
     }
-  }, [mode]);
+  }, [mode, focusTime, shortBreakTime, longBreakTime]);
 
   const countdownTimer = () => {
     if (timeLeft !== 0) {
