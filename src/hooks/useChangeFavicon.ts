@@ -12,11 +12,11 @@ export function updateTitle(time: any, mode: any) {
   document.title = `${formatTime(time)} - ${message}`;
 }
 
-function changeUlrs(list: any, mode: any) {
-  list.forEach(function (element: any) {
+function changeUlrs(list: NodeListOf<Element>, url: string) {
+  list.forEach((element) => {
     element.setAttribute(
       "href",
-      element.getAttribute("href").replace(/\/.+\//g, `/${mode}/`)
+      element.getAttribute("href").replace(/\/.+\//g, `/${url}/`)
     );
   });
 }
@@ -26,22 +26,29 @@ export function updateFavicon(mode: any) {
   const relAppleIcons = document.querySelectorAll(
     'link[rel="apple-touch-icon"]'
   );
-  const tileImages = document.querySelectorAll(
+  const manifest = document.querySelector('link[rel="manifest"]');
+  const tileImage = document.querySelector(
     'meta[name="msapplication-TileImage"]'
   );
 
-  switch (mode) {
-    case "focus":
-      changeUlrs(relIcons, "focus");
-      break;
-    case "shortBreak":
-      changeUlrs(relIcons, "short-break");
-      break;
-    case "longBreak":
-      changeUlrs(relIcons, "long-break");
-      break;
-    default:
-      changeUlrs(relIcons, "focus");
-      break;
+  let url = "focus";
+
+  if (mode === "shortBreak") {
+    url = "short-break";
+  } else if (mode === "longBreak") {
+    url = "long-break";
   }
+
+  changeUlrs(relIcons, url);
+  changeUlrs(relAppleIcons, url);
+  manifest?.setAttribute(
+    "href",
+    manifest.getAttribute("href").replace(/\/.+\//g, `/${url}/`)
+  );
+
+  tileImage?.setAttribute(
+    "content",
+    tileImage.getAttribute("content").replace(/\/.+\//g, `/${url}/`)
+  );
+  tileImage;
 }
