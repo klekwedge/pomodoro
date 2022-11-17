@@ -1,19 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  timer: 0,
+  focusTime: 25,
+  shortBreakTime: 5,
+  longBreakTime: 15,
 };
 
 const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    changeTime: (state, action) => {
-      state.timer = action.payload;
+    changeFocusTime: (state, action) => {
+      state.focusTime = action.payload;
+    },
+    changeShortBreakTime: (state, action) => {
+      state.shortBreakTime = action.payload;
+    },
+    changeLongBreakTime: (state, action) => {
+      state.longBreakTime = action.payload;
     },
   },
 });
 
 const { actions, reducer } = timerSlice;
-export const { changeTime } = actions;
+export const { changeFocusTime, changeShortBreakTime, changeLongBreakTime } =
+  actions;
 export default reducer;

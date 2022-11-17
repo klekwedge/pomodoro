@@ -1,19 +1,24 @@
 import { Flex, Button, Heading } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { ButtonHTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
-import useCountdown from "../../hooks/useCountdown";
 import ButtonTab from "../ButtonTab/ButtonTab";
 import "./Timer.scss";
 
 dayjs.extend(duration);
 
 const Timer = ({ wrapperPageRef }: any) => {
+  const dispatch = useAppDispatch();
+  const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
+    (state) => state.timer
+  );
+
   const [textContentButton, setTextContentButton] = useState("Start");
-  const [timeLeft, setTimeLeft] = useState(25);
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [mode, setMode] = useState("focus");
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
 
   let timer: any;
 
@@ -25,16 +30,16 @@ const Timer = ({ wrapperPageRef }: any) => {
     updateFavicon(mode);
     switch (mode) {
       case "focus":
-        setTimeLeft(30 * 60);
+        setTimeLeft(focusTime * 60);
         break;
       case "shortBreak":
-        setTimeLeft(5 * 60);
+        setTimeLeft(shortBreakTime * 60);
         break;
       case "longBreak":
-        setTimeLeft(15 * 60);
+        setTimeLeft(longBreakTime * 60);
         break;
       default:
-        setTimeLeft(30 * 60);
+        setTimeLeft(focusTime * 60);
         break;
     }
   }, [mode]);
@@ -42,7 +47,7 @@ const Timer = ({ wrapperPageRef }: any) => {
   const countdownTimer = () => {
     if (timeLeft !== 0) {
       setTimeLeft((prev) => prev - 1);
-      setProgress((prev) => prev + 1);
+      // setProgress((prev) => prev + 1);
     }
   };
 
@@ -62,7 +67,6 @@ const Timer = ({ wrapperPageRef }: any) => {
   }, [textContentButton]);
 
   const toggleTimer = () => {
-    console.log('!');
     if (textContentButton === "Start") {
       setTextContentButton("Stop");
     } else if (textContentButton === "Stop") {
