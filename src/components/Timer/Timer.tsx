@@ -1,7 +1,15 @@
-import { Flex, Button, Heading, Box } from "@chakra-ui/react";
+import { Flex, Button, Heading, Box, useDisclosure } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+} from "@chakra-ui/react";
 import { useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
 import ButtonTab from "../ButtonTab/ButtonTab";
@@ -14,6 +22,14 @@ const Timer = ({ wrapperPageRef }: any) => {
   const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
     (state) => state.timer
   );
+
+  const skipTimer = () => {
+    setTimeLeft(0)
+    onClose();
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
@@ -141,12 +157,40 @@ const Timer = ({ wrapperPageRef }: any) => {
             cursor="pointer"
             _hover={{ background: "transparent" }}
             _focus={{ background: "transparent" }}
-            // onClick={() => toggleTimer()}
+            onClick={onOpen}
           >
             <AiFillStepForward />
           </Button>
         ) : null}
       </Box>
+      <>
+        <AlertDialog
+          isOpen={isOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Skip timer
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                Are you sure? You can't undo this action afterwards.
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={skipTimer} ml={3}>
+                  Skip
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </>
     </Flex>
   );
 };

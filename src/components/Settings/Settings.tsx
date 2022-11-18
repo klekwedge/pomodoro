@@ -30,6 +30,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
 import { changeFocusTime } from "../../slices/timerSlice";
 
+
 const Settings = ({ isOpenSetting, onCloseSetting }) => {
   const [sliderValue, setSliderValue] = useState(50);
   const [sliderTickingValue, setSliderTickingValue] = useState(50);
@@ -84,7 +85,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
                   id="pomodoro"
                   defaultValue={focusTime}
                   min={1}
-                  max={60}
+                  max={50}
                   maxWidth="100px"
                 >
                   <NumberInputField />
@@ -109,7 +110,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
                   id="short-break"
                   defaultValue={5}
                   min={1}
-                  max={60}
+                  max={50}
                   maxWidth="100px"
                 >
                   <NumberInputField />
@@ -133,7 +134,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
                   id="long-break"
                   defaultValue={15}
                   min={1}
-                  max={60}
+                  max={50}
                   maxWidth="100px"
                 >
                   <NumberInputField />
