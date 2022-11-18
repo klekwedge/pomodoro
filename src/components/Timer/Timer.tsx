@@ -19,30 +19,34 @@ import "./Timer.scss";
 dayjs.extend(duration);
 
 const Timer = ({ wrapperPageRef }: any) => {
-  const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
-    (state) => state.timer
-  );
-
-  const skipTimer = () => {
-    setTimeLeft(0);
-    onClose();
-  };
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const timerId = useRef(null);
 
+  const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
+    (state) => state.timer
+  );
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
   const [mode, setMode] = useState("focus");
   // const [progress, setProgress] = useState(0);
+
+  const skipTimer = () => {
+    onClose();
+    resetTimer();
+  };
+
+  const resetTimer = () => {
+    clearTimerId();
+    setTextContentButton("Start");
+    updateTimeLeftMode();
+  };
 
   useEffect(() => {
     document.querySelector(".main__option")?.classList.add("active");
   }, []);
 
   const updateTimeLeftMode = () => {
-    console.log('!');
     switch (mode) {
       case "focus":
         setTimeLeft(focusTime * 60);
@@ -64,7 +68,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     updateTimeLeftMode();
   }, [mode, focusTime, shortBreakTime, longBreakTime]);
 
-  const clear = () => {
+  const clearTimerId = () => {
     clearInterval(timerId.current);
     timerId.current = null;
   };
@@ -74,9 +78,7 @@ const Timer = ({ wrapperPageRef }: any) => {
       setTimeLeft((prev) => prev - 1);
     }
     if (timeLeft <= 1) {
-      setTextContentButton("Start");
-      updateTimeLeftMode();
-      clear();
+      resetTimer();
     }
   };
 
@@ -84,7 +86,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     if (textContentButton === "Stop") {
       timerId.current = setInterval(countdownTimer, 1000);
     }
-    return clear;
+    return () => clearTimerId()
   }, [textContentButton, timeLeft]);
 
   const toggleTimer = () => {
@@ -100,6 +102,9 @@ const Timer = ({ wrapperPageRef }: any) => {
   }
 
   const changeMode = (e) => {
+    console.log(e.target.dataset.color);
+    console.log(e.target.dataset.mode);
+
     setTextContentButton("Start");
     wrapperPageRef.current.classList.remove("green", "blue", "red");
     wrapperPageRef.current.classList.add(e.target.dataset.color);
