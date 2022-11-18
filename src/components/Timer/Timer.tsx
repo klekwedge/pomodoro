@@ -1,7 +1,7 @@
 import { Flex, Button, Heading, Box, useDisclosure } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -117,7 +117,7 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     }
   };
 
-  function formatTime(time: any) {
+  function formatTime(time: number) {
     return dayjs.duration(time, "seconds").format("mm:ss");
   }
 

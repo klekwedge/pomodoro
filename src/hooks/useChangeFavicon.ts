@@ -1,13 +1,14 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { ModeType } from "../types/types";
 
 dayjs.extend(duration);
 
-export function formatTime(time: any) {
+export function formatTime(time: number) {
   return dayjs.duration(time, "seconds").format("mm:ss");
 }
 
-export function updateTitle(time: any, mode: any) {
+export function updateTitle(time: number, mode: ModeType) {
   const message = mode === "focus" ? "Time for focus" : "Time for break";
   document.title = `${formatTime(time)} - ${message}`;
 }
@@ -21,7 +22,7 @@ function changeUlrs(list: NodeListOf<Element>, url: string) {
   });
 }
 
-export function updateFavicon(mode: any) {
+export function updateFavicon(mode: ModeType) {
   const relIcons = document.querySelectorAll('link[rel="icon"]');
   const relAppleIcons = document.querySelectorAll(
     'link[rel="apple-touch-icon"]'
