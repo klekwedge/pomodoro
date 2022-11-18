@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
-import ButtonTab from "../ButtonTab/ButtonTab";
+import ButtonTab from "../ModeButton/ModeButton";
 import { AiFillStepForward } from "react-icons/ai";
 import "./Timer.scss";
 
@@ -22,9 +22,8 @@ const Timer = ({ wrapperPageRef }: any) => {
   const cancelRef = useRef();
   const timerId = useRef(null);
 
-  const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
-    (state) => state.timer
-  );
+  const { focusTime, shortBreakTime, longBreakTime, autoStartBreaks } =
+    useAppSelector((state) => state.timer);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
@@ -40,6 +39,19 @@ const Timer = ({ wrapperPageRef }: any) => {
     clearTimerId();
     setTextContentButton("Start");
     updateTimeLeftMode();
+
+    if (autoStartBreaks && mode === 'focus') {
+      setTextContentButton("Start");
+      wrapperPageRef.current.classList.remove("green", "blue", "red");
+      wrapperPageRef.current.classList.add("green");
+
+      document.querySelectorAll(".main__option").forEach((mainOption) => {
+        mainOption.classList.remove("active");
+      });
+      document.querySelectorAll(".main__option")[1].classList.add("active");
+
+      setMode("shortBreak");
+    }
   };
 
   useEffect(() => {
@@ -86,7 +98,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     if (textContentButton === "Stop") {
       timerId.current = setInterval(countdownTimer, 1000);
     }
-    return () => clearTimerId()
+    return () => clearTimerId();
   }, [textContentButton, timeLeft]);
 
   const toggleTimer = () => {
@@ -112,6 +124,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     document.querySelectorAll(".main__option").forEach((mainOption) => {
       mainOption.classList.remove("active");
     });
+    
     e.target.classList.add("active");
 
     setMode(e.target.dataset.mode);

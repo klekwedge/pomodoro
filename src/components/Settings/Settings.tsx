@@ -28,7 +28,7 @@ import {
   SliderMark,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
-import { changeFocusTime } from "../../slices/timerSlice";
+import { changeAutoStartBreaks, changeFocusTime } from "../../slices/timerSlice";
 
 
 const Settings = ({ isOpenSetting, onCloseSetting }) => {
@@ -46,10 +46,8 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
 
   function handler(e) {
     e.preventDefault();
-    console.log(e.target[0].value);
-    // console.log(e.target[1]);
-    // console.log(e.target[2]);
     dispatch(changeFocusTime(+e.target[0].value));
+    dispatch(changeAutoStartBreaks(e.target[3].checked));
   }
 
   return (

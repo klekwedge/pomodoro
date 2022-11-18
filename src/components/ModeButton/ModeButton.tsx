@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 
-export default function ButtonTab({ clickHandler, children, color, mode }: any) {
+export default function ModeButton({ clickHandler, children, color, mode }: any) {
   return (
     <Button
       className="main__option"

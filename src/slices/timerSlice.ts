@@ -28,10 +28,17 @@ const timerSlice = createSlice({
     changeLongBreakTime: (state, action) => {
       state.longBreakTime = action.payload;
     },
+    changeAutoStartBreaks: (state, action) => {
+      state.autoStartBreaks = action.payload;
+    },
   },
 });
 
 const { actions, reducer } = timerSlice;
-export const { changeFocusTime, changeShortBreakTime, changeLongBreakTime } =
-  actions;
+export const {
+  changeFocusTime,
+  changeShortBreakTime,
+  changeLongBreakTime,
+  changeAutoStartBreaks,
+} = actions;
 export default reducer;
