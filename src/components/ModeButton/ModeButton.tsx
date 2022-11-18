@@ -1,6 +1,11 @@
 import { Button } from "@chakra-ui/react";
 
-export default function ModeButton({ clickHandler, children, color, mode }: any) {
+export default function ModeButton({
+  clickHandler,
+  children,
+  color,
+  mode,
+}: any) {
   return (
     <Button
       className="main__option"
@@ -14,7 +19,9 @@ export default function ModeButton({ clickHandler, children, color, mode }: any)
       data-color={color}
       data-mode={mode}
       _hover={{ background: "#808080" }}
-      onClick={(e) => clickHandler(e)}
+      onClick={(e) =>
+        clickHandler(e)
+      }
     >
       {children}
     </Button>

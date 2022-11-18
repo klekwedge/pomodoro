@@ -19,8 +19,8 @@ import "./Timer.scss";
 dayjs.extend(duration);
 
 const Timer = ({ wrapperPageRef }: any) => {
-  const cancelRef = useRef();
-  const timerId = useRef(null);
+  const cancelRef = useRef(null);
+  let timerId: NodeJS.Timer | null = null;
 
   const { focusTime, shortBreakTime, longBreakTime, autoStartBreaks } =
     useAppSelector((state) => state.timer);
@@ -40,7 +40,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     setTextContentButton("Start");
     updateTimeLeftMode();
 
-    if (autoStartBreaks && mode === 'focus') {
+    if (autoStartBreaks && mode === "focus") {
       setTextContentButton("Start");
       wrapperPageRef.current.classList.remove("green", "blue", "red");
       wrapperPageRef.current.classList.add("green");
@@ -61,7 +61,7 @@ const Timer = ({ wrapperPageRef }: any) => {
   const updateTimeLeftMode = () => {
     switch (mode) {
       case "focus":
-        setTimeLeft(focusTime * 60);
+        setTimeLeft(focusTime * 2);
         break;
       case "shortBreak":
         setTimeLeft(shortBreakTime * 60);
@@ -81,22 +81,24 @@ const Timer = ({ wrapperPageRef }: any) => {
   }, [mode, focusTime, shortBreakTime, longBreakTime]);
 
   const clearTimerId = () => {
-    clearInterval(timerId.current);
-    timerId.current = null;
+    if (timerId) {
+      clearInterval(timerId);
+    }
+    timerId = null;
   };
 
   const countdownTimer = () => {
     if (timeLeft > 0) {
       setTimeLeft((prev) => prev - 1);
     }
-    if (timeLeft <= 1) {
+    if (timeLeft <= 0) {
       resetTimer();
     }
   };
 
   useEffect(() => {
     if (textContentButton === "Stop") {
-      timerId.current = setInterval(countdownTimer, 1000);
+      timerId = setInterval(countdownTimer, 1000);
     }
     return () => clearTimerId();
   }, [textContentButton, timeLeft]);
@@ -113,9 +115,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     return dayjs.duration(time, "seconds").format("mm:ss");
   }
 
-  const changeMode = (e) => {
-    console.log(e.target.dataset.color);
-    console.log(e.target.dataset.mode);
+  const changeMode = (e: React.BaseSyntheticEvent<HTMLButtonElement, MouseEvent>) => {
 
     setTextContentButton("Start");
     wrapperPageRef.current.classList.remove("green", "blue", "red");
@@ -124,7 +124,7 @@ const Timer = ({ wrapperPageRef }: any) => {
     document.querySelectorAll(".main__option").forEach((mainOption) => {
       mainOption.classList.remove("active");
     });
-    
+
     e.target.classList.add("active");
 
     setMode(e.target.dataset.mode);

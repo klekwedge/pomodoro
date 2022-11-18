@@ -28,10 +28,17 @@ import {
   SliderMark,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
-import { changeAutoStartBreaks, changeFocusTime } from "../../slices/timerSlice";
+import {
+  changeAutoStartBreaks,
+  changeFocusTime,
+} from "../../slices/timerSlice";
 
+interface SettingsProps {
+  isOpenSetting: boolean;
+  onCloseSetting: () => void;
+}
 
-const Settings = ({ isOpenSetting, onCloseSetting }) => {
+const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
   const [sliderValue, setSliderValue] = useState(50);
   const [sliderTickingValue, setSliderTickingValue] = useState(50);
 
@@ -40,14 +47,10 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
     (state) => state.timer
   );
 
-  function saveChanges(e) {
-    onCloseSetting();
-  }
-
-  function handler(e) {
+  function submitData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(changeFocusTime(+e.target[0].value));
-    dispatch(changeAutoStartBreaks(e.target[3].checked));
+    // dispatch(changeFocusTime(+e.target[0].value));
+    // dispatch(changeAutoStartBreaks(e.target[3].checked));
   }
 
   return (
@@ -58,7 +61,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
         <ModalCloseButton />
         <ModalBody>
           <form
-            onSubmit={handler}
+            onSubmit={(e) => submitData(e)}
             style={{
               display: "flex",
               flexDirection: "column",
@@ -292,7 +295,6 @@ const Settings = ({ isOpenSetting, onCloseSetting }) => {
               maxW="90px"
               colorScheme="blue"
               mr={3}
-              onClick={saveChanges}
             >
               Ok
             </Button>
