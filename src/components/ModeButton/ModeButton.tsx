@@ -1,11 +1,13 @@
 import { Button } from "@chakra-ui/react";
 
+import { IModeButtonProps } from "./ModeButton.props";
+
 export default function ModeButton({
   clickHandler,
   children,
   color,
   mode,
-}: any) {
+}: IModeButtonProps) {
   return (
     <Button
       className="main__option"

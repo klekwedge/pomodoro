@@ -115,8 +115,9 @@ const Timer = ({ wrapperPageRef }: any) => {
     return dayjs.duration(time, "seconds").format("mm:ss");
   }
 
-  const changeMode = (e: React.BaseSyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-
+  const changeMode = (
+    e: React.BaseSyntheticEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     setTextContentButton("Start");
     wrapperPageRef.current.classList.remove("green", "blue", "red");
     wrapperPageRef.current.classList.add(e.target.dataset.color);
