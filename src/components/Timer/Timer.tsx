@@ -1,7 +1,7 @@
 import { Flex, Button, Heading, Box, useDisclosure } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -24,25 +24,25 @@ const Timer = ({ wrapperPageRef }: any) => {
   );
 
   const skipTimer = () => {
-    setTimeLeft(0)
+    setTimeLeft(0);
     onClose();
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  const timerId = useRef(null);
 
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
   const [mode, setMode] = useState("focus");
   // const [progress, setProgress] = useState(0);
-  let timer: any;
 
   useEffect(() => {
     document.querySelector(".main__option")?.classList.add("active");
   }, []);
 
-  useEffect(() => {
-    updateFavicon(mode);
+  const updateTimeLeftMode = () => {
+    console.log('!');
     switch (mode) {
       case "focus":
         setTimeLeft(focusTime * 60);
@@ -57,29 +57,35 @@ const Timer = ({ wrapperPageRef }: any) => {
         setTimeLeft(focusTime * 60);
         break;
     }
-  }, [mode, focusTime, shortBreakTime, longBreakTime]);
-
-  const countdownTimer = () => {
-    if (timeLeft !== 0) {
-      setTimeLeft((prev) => prev - 1);
-      // setProgress((prev) => prev + 1);
-    }
   };
 
-  const updateCount = () => {
-    if (textContentButton === "Stop") {
-      timer = !timer && setInterval(() => countdownTimer(), 1000);
-    }
+  useEffect(() => {
+    updateFavicon(mode);
+    updateTimeLeftMode();
+  }, [mode, focusTime, shortBreakTime, longBreakTime]);
 
-    if (textContentButton === "Start") {
-      clearInterval(timer);
+  const clear = () => {
+    clearInterval(timerId.current);
+    timerId.current = null;
+  };
+
+  const countdownTimer = () => {
+    if (timeLeft > 0) {
+      setTimeLeft((prev) => prev - 1);
+    }
+    if (timeLeft <= 1) {
+      setTextContentButton("Start");
+      updateTimeLeftMode();
+      clear();
     }
   };
 
   useEffect(() => {
-    updateCount();
-    return () => clearInterval(timer);
-  }, [textContentButton]);
+    if (textContentButton === "Stop") {
+      timerId.current = setInterval(countdownTimer, 1000);
+    }
+    return clear;
+  }, [textContentButton, timeLeft]);
 
   const toggleTimer = () => {
     if (textContentButton === "Start") {

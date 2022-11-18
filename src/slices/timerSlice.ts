@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { TimerState } from "./timerSlice.types";
 
 const initialState: TimerState = {
-  focusTime: 25,
+  focusTime: 1,
   shortBreakTime: 5,
   longBreakTime: 15,
   autoStartBreaks: false,
