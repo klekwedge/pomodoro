@@ -17,7 +17,12 @@ import {
   AiOutlineFire,
 } from "react-icons/ai";
 
-const Report = ({ isOpenReport, onCloseReport }: any) => {
+interface ReportProps {
+  isOpenReport: boolean;
+  onCloseReport: () => void;
+}
+
+const Report = ({ isOpenReport, onCloseReport }: ReportProps) => {
   return (
     <Modal isOpen={isOpenReport} onClose={onCloseReport}>
       <ModalOverlay />
