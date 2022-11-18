@@ -15,6 +15,7 @@ import { updateFavicon } from "../../hooks/useChangeFavicon";
 import ButtonTab from "../ModeButton/ModeButton";
 import { AiFillStepForward } from "react-icons/ai";
 import "./Timer.scss";
+import { ModeType } from "../../types/types";
 
 dayjs.extend(duration);
 
@@ -31,7 +32,7 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
-  const [mode, setMode] = useState("focus");
+  const [mode, setMode] = useState<ModeType>("focus");
   // const [progress, setProgress] = useState(0);
 
   const skipTimer = () => {
