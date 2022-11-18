@@ -7,7 +7,7 @@ import Main from "../Timer/Timer";
 import Footer from "../Footer/Footer";
 
 function App() {
-  const wrapperPageRef = useRef(null);
+  const wrapperPageRef = useRef<HTMLDivElement>(null);
 
   return (
     <Flex

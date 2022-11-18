@@ -1,5 +1,4 @@
 import { Button } from "@chakra-ui/react";
-
 import { IModeButtonProps } from "./ModeButton.props";
 
 export default function ModeButton({

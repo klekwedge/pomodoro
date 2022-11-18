@@ -18,7 +18,11 @@ import "./Timer.scss";
 
 dayjs.extend(duration);
 
-const Timer = ({ wrapperPageRef }: any) => {
+interface TimerProps {
+  wrapperPageRef: React.RefObject<HTMLDivElement>;
+}
+
+const Timer = ({ wrapperPageRef }: TimerProps) => {
   const cancelRef = useRef(null);
   let timerId: NodeJS.Timer | null = null;
 
@@ -42,8 +46,10 @@ const Timer = ({ wrapperPageRef }: any) => {
 
     if (autoStartBreaks && mode === "focus") {
       setTextContentButton("Start");
-      wrapperPageRef.current.classList.remove("green", "blue", "red");
-      wrapperPageRef.current.classList.add("green");
+      if (wrapperPageRef.current) {
+        wrapperPageRef.current.classList.remove("green", "blue", "red");
+        wrapperPageRef.current.classList.add("green");
+      }
 
       document.querySelectorAll(".main__option").forEach((mainOption) => {
         mainOption.classList.remove("active");
@@ -119,8 +125,8 @@ const Timer = ({ wrapperPageRef }: any) => {
     e: React.BaseSyntheticEvent<HTMLButtonElement, MouseEvent>
   ) => {
     setTextContentButton("Start");
-    wrapperPageRef.current.classList.remove("green", "blue", "red");
-    wrapperPageRef.current.classList.add(e.target.dataset.color);
+    wrapperPageRef.current?.classList.remove("green", "blue", "red");
+    wrapperPageRef.current?.classList.add(e.target.dataset.color);
 
     document.querySelectorAll(".main__option").forEach((mainOption) => {
       mainOption.classList.remove("active");
