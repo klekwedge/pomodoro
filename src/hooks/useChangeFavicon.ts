@@ -14,10 +14,10 @@ export function updateTitle(time: any, mode: any) {
 
 function changeUlrs(list: NodeListOf<Element>, url: string) {
   list.forEach((element) => {
-    element.setAttribute(
-      "href",
-      element.getAttribute("href").replace(/\/.+\//g, `/${url}/`)
-    );
+    const elementHref = element.getAttribute("href");
+    if (typeof elementHref === "string") {
+      element.setAttribute("href", elementHref.replace(/\/.+\//g, `/${url}/`));
+    }
   });
 }
 
@@ -41,14 +41,20 @@ export function updateFavicon(mode: any) {
 
   changeUlrs(relIcons, url);
   changeUlrs(relAppleIcons, url);
-  manifest?.setAttribute(
-    "href",
-    manifest.getAttribute("href").replace(/\/.+\//g, `/${url}/`)
-  );
 
-  tileImage?.setAttribute(
-    "content",
-    tileImage.getAttribute("content").replace(/\/.+\//g, `/${url}/`)
-  );
+  const manifestHref = manifest?.getAttribute("href");
+
+  if (typeof manifestHref === "string") {
+    manifest?.setAttribute("href", manifestHref.replace(/\/.+\//g, `/${url}/`));
+  }
+
+  const tileImageContent = tileImage?.getAttribute("content");
+  if (typeof tileImageContent === "string") {
+    tileImage?.setAttribute(
+      "content",
+      tileImageContent.replace(/\/.+\//g, `/${url}/`)
+    );
+  }
+
   tileImage;
 }
