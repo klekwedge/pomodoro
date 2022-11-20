@@ -34,6 +34,12 @@ import {
   changeLongBreakTime,
   changeShortBreakTime,
 } from "../../slices/timerSlice/timerSlice";
+import {
+  changeAlarmSound,
+  changeAlarmVolume,
+  changeRepeat,
+  changeTickingVolume,
+} from "../../slices/volumeSlice/volumeSlice";
 
 interface SettingsProps {
   isOpenSetting: boolean;
@@ -51,11 +57,8 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
     longBreakInterval,
   } = useAppSelector((state) => state.timer);
 
-  const {
-    alarmVolume,
-    repeat,
-    tickingVolume,
-  } = useAppSelector((state) => state.volume);
+  const { alarmSound, alarmVolume, repeat, tickingSound, tickingVolume } =
+    useAppSelector((state) => state.volume);
 
   return (
     <Modal isOpen={isOpenSetting} onClose={onCloseSetting}>
@@ -223,7 +226,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                 <Slider
                   aria-label="slider-ex-6"
                   value={alarmVolume}
-                  // onChange={(val) => setSliderValue(val)}
+                  onChange={(val) => dispatch(changeAlarmVolume(val))}
                 >
                   <SliderMark
                     value={alarmVolume}
@@ -254,7 +257,8 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                 </FormLabel>
                 <NumberInput
                   id="alarm-repeat"
-                  defaultValue={repeat}
+                  value={repeat}
+                  onChange={(val) => dispatch(changeRepeat(val))}
                   min={1}
                   max={60}
                   maxWidth="100px"
@@ -286,7 +290,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               <Box pt={6} pb={2}>
                 <Slider
                   value={tickingVolume}
-                  // onChange={(val) => setSliderTickingValue(val)}
+                  onChange={(val) => dispatch(changeTickingVolume(val))}
                 >
                   <SliderMark
                     value={tickingVolume}
