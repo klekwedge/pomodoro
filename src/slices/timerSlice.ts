@@ -43,6 +43,12 @@ const timerSlice = createSlice({
     changeAutoStartBreaks: (state, action) => {
       state.isAutoStartBreaks = action.payload;
     },
+    changeAutoStartPomodoros: (state, action) => {
+      state.isAutoStartPomodoros = action.payload;
+    },
+    changeLongBreakInterval: (state, action) => {
+      state.longBreakInterval = action.payload;
+    },
   },
 });
 
@@ -53,7 +59,9 @@ export const {
   changeShortBreakTime,
   changeLongBreakTime,
   changeAutoStartBreaks,
+  changeAutoStartPomodoros,
   incCurrentRound,
-  resetCurrentRound
+  resetCurrentRound,
+  changeLongBreakInterval
 } = actions;
 export default reducer;

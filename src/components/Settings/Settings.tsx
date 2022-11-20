@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   Flex,
   Box,
@@ -30,7 +28,11 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
 import {
   changeAutoStartBreaks,
+  changeAutoStartPomodoros,
   changeFocusTime,
+  changeLongBreakInterval,
+  changeLongBreakTime,
+  changeShortBreakTime,
 } from "../../slices/timerSlice";
 
 interface SettingsProps {
@@ -39,7 +41,7 @@ interface SettingsProps {
 }
 
 const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const {
     focusTime,
     shortBreakTime,
@@ -52,157 +54,59 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
     tickingVolume,
   } = useAppSelector((state) => state.timer);
 
-  function submitData(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // const formData = new FormData(e.target);
-    // console.log(formData);
-    onCloseSetting();
-    // dispatch(changeFocusTime(+e.target[0].value));
-    // dispatch(changeAutoStartBreaks(e.target[3].checked));
-  }
-
-  function handler(e: any) {
-    // dispatch(changeFocusTime(+e.target[0].value));
-  }
-
   return (
     <Modal isOpen={isOpenSetting} onClose={onCloseSetting}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>TIMER SETTINGS</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <form
-            onSubmit={(e) => submitData(e)}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-            }}
-          >
-            <Heading as="h2" fontSize="20px">
-              Time (minutes)
-            </Heading>
-            <Flex>
-              <FormControl
-                display="flex"
-                alignItems="center"
-                flexDirection="column"
-                justifyContent="space-between"
-                mb="10px"
-              >
-                <FormLabel htmlFor="pomodoro" mb="0" color="gray">
-                  Pomodoro
-                </FormLabel>
-                <NumberInput
-                  id="pomodoro"
-                  defaultValue={focusTime}
-                  min={1}
-                  max={50}
-                  maxWidth="100px"
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-
-              <FormControl
-                display="flex"
-                alignItems="center"
-                flexDirection="column"
-                justifyContent="space-between"
-                mb="10px"
-              >
-                <FormLabel htmlFor="short-break" mb="0" color="gray">
-                  Short Break
-                </FormLabel>
-                <NumberInput
-                  id="short-break"
-                  defaultValue={shortBreakTime}
-                  min={1}
-                  max={50}
-                  maxWidth="100px"
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-              <FormControl
-                display="flex"
-                alignItems="center"
-                flexDirection="column"
-                justifyContent="space-between"
-                mb="10px"
-              >
-                <FormLabel htmlFor="long-break" mb="0" color="gray">
-                  Long Break
-                </FormLabel>
-                <NumberInput
-                  id="long-break"
-                  defaultValue={longBreakTime}
-                  min={1}
-                  max={50}
-                  maxWidth="100px"
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-            </Flex>
+        <ModalBody display="flex" flexDirection="column" gap="20px">
+          <Heading as="h2" fontSize="20px">
+            Time (minutes)
+          </Heading>
+          <Flex>
             <FormControl
               display="flex"
               alignItems="center"
+              flexDirection="column"
               justifyContent="space-between"
               mb="10px"
             >
-              <FormLabel htmlFor="auto-start-breaks" mb="0">
-                Auto start Breaks?
-              </FormLabel>
-              <Switch
-                id="auto-start-breaks"
-                size="md"
-                isChecked={isAutoStartBreaks}
-                onChange={handler}
-              />
-            </FormControl>
-            <FormControl
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              mb="10px"
-            >
-              <FormLabel htmlFor="auto-start-pomodoros" mb="0">
-                Auto start Pomodoros?
-              </FormLabel>
-              <Switch
-                id="auto-start-pomodoros"
-                size="md"
-                isChecked={isAutoStartPomodoros}
-              />
-            </FormControl>
-            <FormControl
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              mb="10px"
-            >
-              <FormLabel htmlFor="long-break-interval" mb="0">
-                Long Break interval
+              <FormLabel htmlFor="pomodoro" mb="0" color="gray">
+                Pomodoro
               </FormLabel>
               <NumberInput
-                id="long-break-interval"
-                value={longBreakInterval}
+                id="pomodoro"
+                value={focusTime}
+                onChange={(e) => dispatch(changeFocusTime(+e))}
                 min={1}
-                max={12}
+                max={50}
+                maxWidth="100px"
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+
+            <FormControl
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+              justifyContent="space-between"
+              mb="10px"
+            >
+              <FormLabel htmlFor="short-break" mb="0" color="gray">
+                Short Break
+              </FormLabel>
+              <NumberInput
+                id="short-break"
+                value={shortBreakTime}
+                onChange={(e) => dispatch(changeShortBreakTime(+e))}
+                min={1}
+                max={50}
                 maxWidth="100px"
               >
                 <NumberInputField />
@@ -214,116 +118,195 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
             </FormControl>
             <FormControl
               display="flex"
-              alignItems="flex-start"
+              alignItems="center"
+              flexDirection="column"
               justifyContent="space-between"
               mb="10px"
             >
-              <FormLabel htmlFor="alarm-sound" mb="0">
-                Alarm Sound
+              <FormLabel htmlFor="long-break" mb="0" color="gray">
+                Long Break
               </FormLabel>
-              <Flex flexDirection="column" gap="20px">
-                <Select maxWidth="200px" id="alarm-sound">
-                  <option value="digital">Digital</option>
-                  <option value="bell">Bell</option>
-                </Select>
-                <Box pt={6} pb={2}>
-                  <Slider
-                    aria-label="slider-ex-6"
-                    value={alarmVolume}
-                    // onChange={(val) => setSliderValue(val)}
-                  >
-                    <SliderMark
-                      value={alarmVolume}
-                      textAlign="center"
-                      bg="transparrent"
-                      color="blue.500"
-                      mt="-10"
-                      ml="-5"
-                      w="12"
-                    >
-                      {alarmVolume}
-                    </SliderMark>
-                    <SliderTrack>
-                      <SliderFilledTrack />
-                    </SliderTrack>
-                    <SliderThumb />
-                  </Slider>
-                </Box>
-
-                <FormControl
-                  display="flex"
-                  alignItems="flex-start"
-                  flexDirection="column"
-                  mb="10px"
+              <NumberInput
+                id="long-break"
+                value={longBreakTime}
+                onChange={(e) => dispatch(changeLongBreakTime(+e))}
+                min={1}
+                max={50}
+                maxWidth="100px"
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+          </Flex>
+          <FormControl
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            mb="10px"
+          >
+            <FormLabel htmlFor="auto-start-breaks" mb="0">
+              Auto start Breaks?
+            </FormLabel>
+            <Switch
+              id="auto-start-breaks"
+              size="md"
+              isChecked={isAutoStartBreaks}
+              onChange={(e) =>
+                dispatch(changeAutoStartBreaks(e.target.checked))
+              }
+            />
+          </FormControl>
+          <FormControl
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            mb="10px"
+          >
+            <FormLabel htmlFor="auto-start-pomodoros" mb="0">
+              Auto start Pomodoros?
+            </FormLabel>
+            <Switch
+              id="auto-start-pomodoros"
+              size="md"
+              isChecked={isAutoStartPomodoros}
+              onChange={(e) =>
+                dispatch(changeAutoStartPomodoros(e.target.checked))
+              }
+            />
+          </FormControl>
+          <FormControl
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            mb="10px"
+          >
+            <FormLabel htmlFor="long-break-interval" mb="0">
+              Long Break interval
+            </FormLabel>
+            <NumberInput
+              id="long-break-interval"
+              value={longBreakInterval}
+              onChange={(e) => dispatch(changeLongBreakInterval(+e))}
+              min={1}
+              max={12}
+              maxWidth="100px"
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </FormControl>
+          <FormControl
+            display="flex"
+            alignItems="flex-start"
+            justifyContent="space-between"
+            mb="10px"
+          >
+            <FormLabel htmlFor="alarm-sound" mb="0">
+              Alarm Sound
+            </FormLabel>
+            <Flex flexDirection="column" gap="20px">
+              <Select maxWidth="200px" id="alarm-sound">
+                <option value="digital">Digital</option>
+                <option value="bell">Bell</option>
+              </Select>
+              <Box pt={6} pb={2}>
+                <Slider
+                  aria-label="slider-ex-6"
+                  value={alarmVolume}
+                  // onChange={(val) => setSliderValue(val)}
                 >
-                  <FormLabel htmlFor="alarm-repeat" mb="0" color="gray">
-                    Repeat
-                  </FormLabel>
-                  <NumberInput
-                    id="alarm-repeat"
-                    defaultValue={repeat}
-                    min={1}
-                    max={60}
-                    maxWidth="100px"
+                  <SliderMark
+                    value={alarmVolume}
+                    textAlign="center"
+                    bg="transparrent"
+                    color="blue.500"
+                    mt="-10"
+                    ml="-5"
+                    w="12"
                   >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
-              </Flex>
-            </FormControl>
-            <FormControl
-              display="flex"
-              alignItems="flex-start"
-              justifyContent="space-between"
-              mb="10px"
-            >
-              <FormLabel htmlFor="ticking-sound" mb="0">
-                Ticking Sound
-              </FormLabel>
-              <Flex flexDirection="column" gap="20px">
-                <Select maxWidth="250px" width="100%" id="ticking-sound">
-                  <option value="none">None</option>
-                  <option value="ticking-fast">Ticking Fast</option>
-                  <option value="ticking-slow">Ticking Slow</option>
-                </Select>
-                <Box pt={6} pb={2}>
-                  <Slider
+                    {alarmVolume}
+                  </SliderMark>
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+
+              <FormControl
+                display="flex"
+                alignItems="flex-start"
+                flexDirection="column"
+                mb="10px"
+              >
+                <FormLabel htmlFor="alarm-repeat" mb="0" color="gray">
+                  Repeat
+                </FormLabel>
+                <NumberInput
+                  id="alarm-repeat"
+                  defaultValue={repeat}
+                  min={1}
+                  max={60}
+                  maxWidth="100px"
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+            </Flex>
+          </FormControl>
+          <FormControl
+            display="flex"
+            alignItems="flex-start"
+            justifyContent="space-between"
+            mb="10px"
+          >
+            <FormLabel htmlFor="ticking-sound" mb="0">
+              Ticking Sound
+            </FormLabel>
+            <Flex flexDirection="column" gap="20px">
+              <Select maxWidth="250px" width="100%" id="ticking-sound">
+                <option value="none">None</option>
+                <option value="ticking-fast">Ticking Fast</option>
+                <option value="ticking-slow">Ticking Slow</option>
+              </Select>
+              <Box pt={6} pb={2}>
+                <Slider
+                  value={tickingVolume}
+                  // onChange={(val) => setSliderTickingValue(val)}
+                >
+                  <SliderMark
                     value={tickingVolume}
-                    // onChange={(val) => setSliderTickingValue(val)}
+                    textAlign="center"
+                    bg="transparrent"
+                    color="blue.500"
+                    mt="-10"
+                    ml="-5"
+                    w="12"
                   >
-                    <SliderMark
-                      value={tickingVolume}
-                      textAlign="center"
-                      bg="transparrent"
-                      color="blue.500"
-                      mt="-10"
-                      ml="-5"
-                      w="12"
-                    >
-                      {tickingVolume}
-                    </SliderMark>
-                    <SliderTrack>
-                      <SliderFilledTrack />
-                    </SliderTrack>
-                    <SliderThumb />
-                  </Slider>
-                </Box>
-              </Flex>
-            </FormControl>
-            <Button
-              type="submit"
-              m="0 auto 0 auto"
-              maxW="90px"
-              colorScheme="blue"
-              mr={3}
-            >
-              Ok
-            </Button>
-          </form>
+                    {tickingVolume}
+                  </SliderMark>
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+            </Flex>
+          </FormControl>
+          <Button m="0 auto 0 auto" maxW="90px" colorScheme="blue" mr={3}>
+            Ok
+          </Button>
         </ModalBody>
 
         <ModalFooter></ModalFooter>
