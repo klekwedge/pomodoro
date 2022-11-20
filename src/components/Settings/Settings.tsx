@@ -39,22 +39,30 @@ interface SettingsProps {
 }
 
 const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
-  const [sliderValue, setSliderValue] = useState(50);
-  const [sliderTickingValue, setSliderTickingValue] = useState(50);
-
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const {
     focusTime,
     shortBreakTime,
     longBreakTime,
     isAutoStartBreaks,
     isAutoStartPomodoros,
+    longBreakInterval,
+    alarmVolume,
+    repeat,
+    tickingVolume,
   } = useAppSelector((state) => state.timer);
 
   function submitData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // const formData = new FormData(e.target);
+    // console.log(formData);
+    onCloseSetting();
     // dispatch(changeFocusTime(+e.target[0].value));
     // dispatch(changeAutoStartBreaks(e.target[3].checked));
+  }
+
+  function handler(e: any) {
+    // dispatch(changeFocusTime(+e.target[0].value));
   }
 
   return (
@@ -113,7 +121,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                 </FormLabel>
                 <NumberInput
                   id="short-break"
-                  defaultValue={5}
+                  defaultValue={shortBreakTime}
                   min={1}
                   max={50}
                   maxWidth="100px"
@@ -137,7 +145,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                 </FormLabel>
                 <NumberInput
                   id="long-break"
-                  defaultValue={15}
+                  defaultValue={longBreakTime}
                   min={1}
                   max={50}
                   maxWidth="100px"
@@ -163,6 +171,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                 id="auto-start-breaks"
                 size="md"
                 isChecked={isAutoStartBreaks}
+                onChange={handler}
               />
             </FormControl>
             <FormControl
@@ -191,7 +200,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               </FormLabel>
               <NumberInput
                 id="long-break-interval"
-                defaultValue={4}
+                value={longBreakInterval}
                 min={1}
                 max={12}
                 maxWidth="100px"
@@ -220,10 +229,11 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                 <Box pt={6} pb={2}>
                   <Slider
                     aria-label="slider-ex-6"
-                    onChange={(val) => setSliderValue(val)}
+                    value={alarmVolume}
+                    // onChange={(val) => setSliderValue(val)}
                   >
                     <SliderMark
-                      value={sliderValue}
+                      value={alarmVolume}
                       textAlign="center"
                       bg="transparrent"
                       color="blue.500"
@@ -231,7 +241,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                       ml="-5"
                       w="12"
                     >
-                      {sliderValue}
+                      {alarmVolume}
                     </SliderMark>
                     <SliderTrack>
                       <SliderFilledTrack />
@@ -251,7 +261,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                   </FormLabel>
                   <NumberInput
                     id="alarm-repeat"
-                    defaultValue={1}
+                    defaultValue={repeat}
                     min={1}
                     max={60}
                     maxWidth="100px"
@@ -281,9 +291,12 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                   <option value="ticking-slow">Ticking Slow</option>
                 </Select>
                 <Box pt={6} pb={2}>
-                  <Slider onChange={(val) => setSliderTickingValue(val)}>
+                  <Slider
+                    value={tickingVolume}
+                    // onChange={(val) => setSliderTickingValue(val)}
+                  >
                     <SliderMark
-                      value={sliderTickingValue}
+                      value={tickingVolume}
                       textAlign="center"
                       bg="transparrent"
                       color="blue.500"
@@ -291,7 +304,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
                       ml="-5"
                       w="12"
                     >
-                      {sliderTickingValue}
+                      {tickingVolume}
                     </SliderMark>
                     <SliderTrack>
                       <SliderFilledTrack />
