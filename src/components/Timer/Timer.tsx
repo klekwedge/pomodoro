@@ -2,6 +2,7 @@ import { Flex, Button, Heading, Box, useDisclosure } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -17,8 +18,9 @@ import { AiFillStepForward } from "react-icons/ai";
 import {
   changeMode,
   incCurrentRound,
-  incProgress,
+  incCurrentProgress,
   resetCurrentRound,
+  addProgress,
 } from "../../slices/timerSlice/timerSlice";
 
 dayjs.extend(duration);
@@ -44,14 +46,14 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     mode,
     currentRound,
     longBreakInterval,
-    progress,
+    currentProgress,
   } = useAppSelector((state) => state.timer);
   const dispatch = useAppDispatch();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [textContentButton, setTextContentButton] = useState("Start");
 
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(focusTime * 5);
 
   const skipTimer = () => {
     onClose();
@@ -80,6 +82,16 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     clearTimerId();
     setTextContentButton("Start");
     updateTimeLeftMode();
+
+    if (mode === "focus") {
+      dispatch(
+        addProgress({
+          date: new Date().toLocaleDateString(),
+          minutes: focusTime * 5,
+          id: uuidv4(),
+        })
+      );
+    }
 
     if (isAutoStartBreaks && mode === "focus") {
       if (currentRound === longBreakInterval) {
@@ -134,12 +146,10 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     timerId = null;
   };
 
-  console.log(progress);
-
   const countdownTimer = () => {
     if (timeLeft > 0) {
       setTimeLeft((prev) => prev - 1);
-      dispatch(incProgress(progress + 1));
+      // dispatch(incCurrentProgress());
     }
     if (timeLeft <= 0) {
       resetTimer();
