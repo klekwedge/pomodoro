@@ -14,7 +14,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
 import ButtonTab from "../ModeButton/ModeButton";
 import { AiFillStepForward } from "react-icons/ai";
-import "./Timer.scss";
 import {
   changeMode,
   incCurrentRound,
@@ -90,7 +89,7 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   };
 
   useEffect(() => {
-    document.querySelector(".main__option")?.classList.add("active");
+    pomodoroMode.current?.classList.add("active");
   }, []);
 
   const updateTimeLeftMode = () => {

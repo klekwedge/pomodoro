@@ -10,7 +10,7 @@ export default function ModeButton({
 }: IModeButtonProps) {
   return (
     <Button
-      className="main__option"
+      className="main__mode-button"
       fontSize="18px"
       width="100px"
       height="28px"

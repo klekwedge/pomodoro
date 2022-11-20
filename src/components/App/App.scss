@@ -9,7 +9,7 @@
     transition: all 0.4s ease;
   }
 
-  & .main__option {
+  & .main__mode-button {
     transition: all 0.4s ease;
   }
 
@@ -29,7 +29,7 @@
     color: #db524d;
   }
 
-  & .main__option.active {
+  & .main__mode-button.active {
     background: #be5551;
   }
 
@@ -49,7 +49,7 @@
     color: #468e91;
   }
 
-  & .main__option.active {
+  & .main__mode-button.active {
     background: #4c8385;
   }
 
@@ -69,11 +69,15 @@
     color: #437ea8;
   }
 
-  & .main__option.active {
+  & .main__mode-button.active {
     background: #497697;
   }
 
   & .header__option {
     background: #6595b8;
   }
+}
+
+.main__mode-button.active{
+  background: #BE5551;
 }
