@@ -4,8 +4,8 @@ export interface TimerState {
   focusTime: number;
   shortBreakTime: number;
   longBreakTime: number;
-  autoStartBreaks: boolean;
-  autoStartPomodoros: boolean;
+  isAutoStartBreaks: boolean;
+  isAutoStartPomodoros: boolean;
   longBreakInterval: number;
   alarmSound: "digital" | "bell";
   alarmVolume: number;

@@ -47,8 +47,8 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
     focusTime,
     shortBreakTime,
     longBreakTime,
-    autoStartBreaks,
-    autoStartPomodoros,
+    isAutoStartBreaks,
+    isAutoStartPomodoros,
   } = useAppSelector((state) => state.timer);
 
   function submitData(e: React.FormEvent<HTMLFormElement>) {
@@ -162,7 +162,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               <Switch
                 id="auto-start-breaks"
                 size="md"
-                isChecked={autoStartBreaks}
+                isChecked={isAutoStartBreaks}
               />
             </FormControl>
             <FormControl
@@ -177,7 +177,7 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               <Switch
                 id="auto-start-pomodoros"
                 size="md"
-                isChecked={autoStartPomodoros}
+                isChecked={isAutoStartPomodoros}
               />
             </FormControl>
             <FormControl

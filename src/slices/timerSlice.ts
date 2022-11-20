@@ -6,8 +6,8 @@ const initialState: TimerState = {
   focusTime: 1,
   shortBreakTime: 2,
   longBreakTime: 3,
-  autoStartBreaks: true,
-  autoStartPomodoros: false,
+  isAutoStartBreaks: true,
+  isAutoStartPomodoros: false,
   longBreakInterval: 4,
   alarmSound: "digital",
   alarmVolume: 50,
@@ -41,7 +41,7 @@ const timerSlice = createSlice({
       state.longBreakTime = action.payload;
     },
     changeAutoStartBreaks: (state, action) => {
-      state.autoStartBreaks = action.payload;
+      state.isAutoStartBreaks = action.payload;
     },
   },
 });

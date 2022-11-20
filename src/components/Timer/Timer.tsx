@@ -28,13 +28,17 @@ interface TimerProps {
 
 const Timer = ({ wrapperPageRef }: TimerProps) => {
   const cancelRef = useRef(null);
+  const pomodoroMode = useRef<HTMLButtonElement>(null);
+  const shortBreakMode = useRef<HTMLButtonElement>(null);
+  const longBreakMode = useRef<HTMLButtonElement>(null);
+
   let timerId: NodeJS.Timer | null = null;
 
   const {
     focusTime,
     shortBreakTime,
     longBreakTime,
-    autoStartBreaks,
+    isAutoStartBreaks,
     mode,
     currentRound,
     longBreakInterval,
@@ -44,9 +48,6 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
   // const [progress, setProgress] = useState(0);
-  const pomodoroMode = useRef<HTMLButtonElement>(null);
-  const shortBreakMode = useRef<HTMLButtonElement>(null);
-  const longBreakMode = useRef<HTMLButtonElement>(null);
 
   const skipTimer = () => {
     onClose();
@@ -74,7 +75,7 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     setTextContentButton("Start");
     updateTimeLeftMode();
 
-    if (autoStartBreaks && mode === "focus") {
+    if (isAutoStartBreaks && mode === "focus") {
       if (currentRound === longBreakInterval) {
         dispatch(resetCurrentRound());
         changeStyles(false);
