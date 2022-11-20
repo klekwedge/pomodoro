@@ -39,6 +39,7 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     shortBreakTime,
     longBreakTime,
     isAutoStartBreaks,
+    isAutoStartPomodoros,
     mode,
     currentRound,
     longBreakInterval,
@@ -54,19 +55,21 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     resetTimer();
   };
 
-  const changeStyles = (isShortBreakMode: boolean) => {
+  const changeStyles = (isLongBreak: boolean) => {
     wrapperPageRef.current?.classList.remove("green", "blue", "red");
-
     pomodoroMode.current?.classList.remove("active");
     shortBreakMode.current?.classList.remove("active");
     longBreakMode.current?.classList.remove("active");
 
-    if (isShortBreakMode) {
+    if (mode === "focus" && !isLongBreak) {
       shortBreakMode.current?.classList.add("active");
       wrapperPageRef.current?.classList.add("green");
-    } else {
+    } else if (mode === "focus" && isLongBreak) {
       longBreakMode.current?.classList.add("active");
       wrapperPageRef.current?.classList.add("blue");
+    } else {
+      pomodoroMode.current?.classList.add("active");
+      wrapperPageRef.current?.classList.add("red");
     }
   };
 
@@ -78,14 +81,20 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     if (isAutoStartBreaks && mode === "focus") {
       if (currentRound === longBreakInterval) {
         dispatch(resetCurrentRound());
-        changeStyles(false);
+        changeStyles(true);
       } else {
         dispatch(incCurrentRound());
-        changeStyles(true);
+        changeStyles(false);
       }
 
       setTextContentButton("Start");
       dispatch(changeMode("shortBreak"));
+    }
+
+    if (isAutoStartPomodoros && mode !== "focus") {
+      setTextContentButton("Start");
+      dispatch(changeMode("focus"));
+      changeStyles(false);
     }
   };
 

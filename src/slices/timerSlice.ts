@@ -7,7 +7,7 @@ const initialState: TimerState = {
   shortBreakTime: 2,
   longBreakTime: 3,
   isAutoStartBreaks: true,
-  isAutoStartPomodoros: false,
+  isAutoStartPomodoros: true,
   longBreakInterval: 4,
   alarmSound: "digital",
   alarmVolume: 50,
