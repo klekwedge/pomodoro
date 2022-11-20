@@ -5,4 +5,5 @@ export interface IModeButtonProps {
   children: React.ReactNode;
   color: ColorType;
   mode: ModeType;
+  refProp: React.RefObject<HTMLButtonElement>;
 }

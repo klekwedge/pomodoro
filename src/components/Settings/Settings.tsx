@@ -43,9 +43,13 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
   const [sliderTickingValue, setSliderTickingValue] = useState(50);
 
   const dispatch = useAppDispatch();
-  const { focusTime, shortBreakTime, longBreakTime } = useAppSelector(
-    (state) => state.timer
-  );
+  const {
+    focusTime,
+    shortBreakTime,
+    longBreakTime,
+    autoStartBreaks,
+    autoStartPomodoros,
+  } = useAppSelector((state) => state.timer);
 
   function submitData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -155,7 +159,11 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               <FormLabel htmlFor="auto-start-breaks" mb="0">
                 Auto start Breaks?
               </FormLabel>
-              <Switch id="auto-start-breaks" size="md" />
+              <Switch
+                id="auto-start-breaks"
+                size="md"
+                isChecked={autoStartBreaks}
+              />
             </FormControl>
             <FormControl
               display="flex"
@@ -166,7 +174,11 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               <FormLabel htmlFor="auto-start-pomodoros" mb="0">
                 Auto start Pomodoros?
               </FormLabel>
-              <Switch id="auto-start-pomodoros" size="md" />
+              <Switch
+                id="auto-start-pomodoros"
+                size="md"
+                isChecked={autoStartPomodoros}
+              />
             </FormControl>
             <FormControl
               display="flex"

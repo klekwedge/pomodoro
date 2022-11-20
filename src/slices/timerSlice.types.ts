@@ -1,3 +1,5 @@
+import { ModeType } from "../types/types";
+
 export interface TimerState {
   focusTime: number;
   shortBreakTime: number;
@@ -10,4 +12,6 @@ export interface TimerState {
   repeat: number;
   tickingSound: "none" | "ticking-fast" | "ticking-slow";
   tickingVolume: number;
+  currentRound: number;
+  mode: ModeType;
 }

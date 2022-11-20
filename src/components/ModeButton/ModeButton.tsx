@@ -6,6 +6,7 @@ export default function ModeButton({
   children,
   color,
   mode,
+  refProp
 }: IModeButtonProps) {
   return (
     <Button
@@ -23,6 +24,7 @@ export default function ModeButton({
       onClick={(e) =>
         clickHandler(e)
       }
+      ref={refProp}
     >
       {children}
     </Button>

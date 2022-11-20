@@ -10,12 +10,16 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { useAppSelector } from "../../hooks/redux-hook";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hook";
 import { updateFavicon } from "../../hooks/useChangeFavicon";
 import ButtonTab from "../ModeButton/ModeButton";
 import { AiFillStepForward } from "react-icons/ai";
 import "./Timer.scss";
-import { ModeType } from "../../types/types";
+import {
+  changeMode,
+  incCurrentRound,
+  resetCurrentRound,
+} from "../../slices/timerSlice";
 
 dayjs.extend(duration);
 
@@ -27,17 +31,43 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const cancelRef = useRef(null);
   let timerId: NodeJS.Timer | null = null;
 
-  const { focusTime, shortBreakTime, longBreakTime, autoStartBreaks } =
-    useAppSelector((state) => state.timer);
+  const {
+    focusTime,
+    shortBreakTime,
+    longBreakTime,
+    autoStartBreaks,
+    mode,
+    currentRound,
+    longBreakInterval,
+  } = useAppSelector((state) => state.timer);
+  const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [textContentButton, setTextContentButton] = useState("Start");
   const [timeLeft, setTimeLeft] = useState(0);
-  const [mode, setMode] = useState<ModeType>("focus");
   // const [progress, setProgress] = useState(0);
+  const pomodoroMode = useRef<HTMLButtonElement>(null);
+  const shortBreakMode = useRef<HTMLButtonElement>(null);
+  const longBreakMode = useRef<HTMLButtonElement>(null);
 
   const skipTimer = () => {
     onClose();
     resetTimer();
+  };
+
+  const changeStyles = (isShortBreakMode: boolean) => {
+    wrapperPageRef.current?.classList.remove("green", "blue", "red");
+
+    pomodoroMode.current?.classList.remove("active");
+    shortBreakMode.current?.classList.remove("active");
+    longBreakMode.current?.classList.remove("active");
+
+    if (isShortBreakMode) {
+      shortBreakMode.current?.classList.add("active");
+      wrapperPageRef.current?.classList.add("green");
+    } else {
+      longBreakMode.current?.classList.add("active");
+      wrapperPageRef.current?.classList.add("blue");
+    }
   };
 
   const resetTimer = () => {
@@ -46,18 +76,16 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     updateTimeLeftMode();
 
     if (autoStartBreaks && mode === "focus") {
-      setTextContentButton("Start");
-      if (wrapperPageRef.current) {
-        wrapperPageRef.current.classList.remove("green", "blue", "red");
-        wrapperPageRef.current.classList.add("green");
+      if (currentRound === longBreakInterval) {
+        dispatch(resetCurrentRound());
+        changeStyles(false);
+      } else {
+        dispatch(incCurrentRound());
+        changeStyles(true);
       }
 
-      document.querySelectorAll(".main__option").forEach((mainOption) => {
-        mainOption.classList.remove("active");
-      });
-      document.querySelectorAll(".main__option")[1].classList.add("active");
-
-      setMode("shortBreak");
+      setTextContentButton("Start");
+      dispatch(changeMode("shortBreak"));
     }
   };
 
@@ -68,13 +96,13 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const updateTimeLeftMode = () => {
     switch (mode) {
       case "focus":
-        setTimeLeft(focusTime * 2);
+        setTimeLeft(focusTime * 5);
         break;
       case "shortBreak":
-        setTimeLeft(shortBreakTime * 60);
+        setTimeLeft(shortBreakTime * 5);
         break;
       case "longBreak":
-        setTimeLeft(longBreakTime * 60);
+        setTimeLeft(longBreakTime * 5);
         break;
       default:
         setTimeLeft(focusTime * 60);
@@ -122,20 +150,20 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     return dayjs.duration(time, "seconds").format("mm:ss");
   }
 
-  const changeMode = (
+  const changeModeStyles = (
     e: React.BaseSyntheticEvent<HTMLButtonElement, MouseEvent>
   ) => {
     setTextContentButton("Start");
     wrapperPageRef.current?.classList.remove("green", "blue", "red");
     wrapperPageRef.current?.classList.add(e.target.dataset.color);
 
-    document.querySelectorAll(".main__option").forEach((mainOption) => {
-      mainOption.classList.remove("active");
-    });
+    pomodoroMode.current?.classList.remove("active");
+    shortBreakMode.current?.classList.remove("active");
+    longBreakMode.current?.classList.remove("active");
 
     e.target.classList.add("active");
 
-    setMode(e.target.dataset.mode);
+    dispatch(changeMode(e.target.dataset.mode));
   };
 
   return (
@@ -148,13 +176,28 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
       className="wrapper-main"
     >
       <Flex gap="15px">
-        <ButtonTab mode="focus" color="red" clickHandler={changeMode}>
+        <ButtonTab
+          mode="focus"
+          color="red"
+          clickHandler={changeModeStyles}
+          refProp={pomodoroMode}
+        >
           Pomodoro
         </ButtonTab>
-        <ButtonTab mode="shortBreak" color="green" clickHandler={changeMode}>
+        <ButtonTab
+          mode="shortBreak"
+          color="green"
+          clickHandler={changeModeStyles}
+          refProp={shortBreakMode}
+        >
           Short Break
         </ButtonTab>
-        <ButtonTab mode="longBreak" color="blue" clickHandler={changeMode}>
+        <ButtonTab
+          mode="longBreak"
+          color="blue"
+          clickHandler={changeModeStyles}
+          refProp={longBreakMode}
+        >
           Long Break
         </ButtonTab>
       </Flex>
