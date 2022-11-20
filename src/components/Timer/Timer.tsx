@@ -18,7 +18,6 @@ import { AiFillStepForward } from "react-icons/ai";
 import {
   changeMode,
   incCurrentRound,
-  incCurrentProgress,
   resetCurrentRound,
   addProgress,
 } from "../../slices/timerSlice/timerSlice";
@@ -46,7 +45,6 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     mode,
     currentRound,
     longBreakInterval,
-    currentProgress,
   } = useAppSelector((state) => state.timer);
   const dispatch = useAppDispatch();
 
@@ -149,7 +147,7 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const countdownTimer = () => {
     if (timeLeft > 0) {
       setTimeLeft((prev) => prev - 1);
-      // dispatch(incCurrentProgress());
+      
     }
     if (timeLeft <= 0) {
       resetTimer();

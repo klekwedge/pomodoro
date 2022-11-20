@@ -9,7 +9,6 @@ export interface TimerState {
   longBreakInterval: number;
   currentRound: number;
   mode: ModeType;
-  currentProgress: number;
   progress: ProgressEl[];
 }
 

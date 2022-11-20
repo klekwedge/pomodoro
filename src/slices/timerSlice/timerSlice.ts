@@ -11,7 +11,6 @@ const initialState: TimerState = {
   longBreakInterval: 4,
   currentRound: 1,
   mode: "focus",
-  currentProgress: 0,
   progress: [],
 };
 
@@ -46,9 +45,6 @@ const timerSlice = createSlice({
     changeLongBreakInterval: (state, action) => {
       state.longBreakInterval = action.payload;
     },
-    incCurrentProgress: (state) => {
-      state.currentProgress = state.currentProgress + 1;
-    },
     addProgress: (state, action) => {
       state.progress.push(action.payload);
     },
@@ -66,7 +62,6 @@ export const {
   incCurrentRound,
   resetCurrentRound,
   changeLongBreakInterval,
-  incCurrentProgress,
   addProgress
 } = actions;
 export default reducer;

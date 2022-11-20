@@ -323,7 +323,13 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               </Box>
             </Flex>
           </FormControl>
-          <Button m="0 auto 0 auto" maxW="90px" colorScheme="blue" mr={3}>
+          <Button
+            m="0 auto 0 auto"
+            maxW="90px"
+            colorScheme="blue"
+            mr={3}
+            onClick={onCloseSetting}
+          >
             Ok
           </Button>
         </ModalBody>
