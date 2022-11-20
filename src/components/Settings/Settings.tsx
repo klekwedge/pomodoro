@@ -38,6 +38,7 @@ import {
   changeAlarmSound,
   changeAlarmVolume,
   changeRepeat,
+  changeTickingSound,
   changeTickingVolume,
 } from "../../slices/volumeSlice/volumeSlice";
 
@@ -218,7 +219,12 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               Alarm Sound
             </FormLabel>
             <Flex flexDirection="column" gap="20px">
-              <Select maxWidth="200px" id="alarm-sound">
+              <Select
+                maxWidth="200px"
+                id="alarm-sound"
+                onChange={(e) => dispatch(changeAlarmSound(e.target.value))}
+                value={alarmSound}
+              >
                 <option value="digital">Digital</option>
                 <option value="bell">Bell</option>
               </Select>
@@ -282,7 +288,13 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
               Ticking Sound
             </FormLabel>
             <Flex flexDirection="column" gap="20px">
-              <Select maxWidth="250px" width="100%" id="ticking-sound">
+              <Select
+                maxWidth="250px"
+                width="100%"
+                id="ticking-sound"
+                onChange={(e) => dispatch(changeTickingSound(e.target.value))}
+                value={tickingSound}
+              >
                 <option value="none">None</option>
                 <option value="ticking-fast">Ticking Fast</option>
                 <option value="ticking-slow">Ticking Slow</option>
