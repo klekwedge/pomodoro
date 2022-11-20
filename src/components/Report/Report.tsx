@@ -8,7 +8,11 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Tabs, TabList, TabPanels, Tab, TabPanel
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 
 import {
@@ -16,6 +20,8 @@ import {
   AiOutlineCalendar,
   AiOutlineFire,
 } from "react-icons/ai";
+import Detail from "../Detail/Detail";
+import Summary from "../Summary/Summary";
 
 interface ReportProps {
   isOpenReport: boolean;
@@ -54,87 +60,13 @@ const Report = ({ isOpenReport, onCloseReport }: ReportProps) => {
               </Tab>
             </TabList>
             <TabPanels>
-              <TabPanel padding="0">
-                <Heading as="h3" fontSize="18px" mb="20px">
-                  Activity Summary
-                </Heading>
-                <Flex flexDirection="column" gap="10px">
-                  <Flex
-                    justifyContent="space-between"
-                    background="#F8E8E7"
-                    p="20px 20px"
-                    borderRadius="10px"
-                  >
-                    <AiOutlineClockCircle size="30px" fill="#E7AFAD" />
-                    <Flex
-                      flexDirection="column"
-                      gap="5px"
-                      alignItems="flex-end"
-                    >
-                      <span>--</span>
-                      <span>hours focused</span>
-                    </Flex>
-                  </Flex>
-                  <Flex
-                    justifyContent="space-between"
-                    background="#F8E8E7"
-                    p="20px 20px"
-                    borderRadius="10px"
-                  >
-                    <AiOutlineCalendar size="30px" fill="#E7AFAD" />
-                    <Flex
-                      flexDirection="column"
-                      gap="5px"
-                      alignItems="flex-end"
-                    >
-                      <span>--</span>
-                      <span>days accessed</span>
-                    </Flex>
-                  </Flex>
-                  <Flex
-                    justifyContent="space-between"
-                    background="#F8E8E7"
-                    p="20px 20px"
-                    borderRadius="10px"
-                  >
-                    <AiOutlineFire size="30px" fill="#E7AFAD" />
-                    <Flex
-                      flexDirection="column"
-                      gap="5px"
-                      alignItems="flex-end"
-                    >
-                      <span>--</span>
-                      <span>day streak</span>
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </TabPanel>
-              <TabPanel padding="0">
-                <Heading as="h3" fontSize="18px" mb="20px">
-                  Focus Time Detail
-                </Heading>
-                <Flex flexDirection="column">
-                  <Flex
-                    alignItems="center"
-                    justifyContent="space-between"
-                    color="gray"
-                    borderBottom="1px solid gray"
-                    pb="10px"
-                  >
-                    <Heading as="h4" fontSize="14px" fontWeight="400">
-                      DATE
-                    </Heading>
-                    <Heading as="h4" fontSize="14px" fontWeight="400">
-                      MINUTES
-                    </Heading>
-                  </Flex>
-                </Flex>
-              </TabPanel>
+              <Summary />
+              <Detail />
             </TabPanels>
           </Tabs>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="red" mr={3} onClick={onCloseReport}>
+          <Button colorScheme="blue" mr={3} onClick={onCloseReport}>
             Close
           </Button>
         </ModalFooter>
