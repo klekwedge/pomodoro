@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import timer from "../slices/timerSlice";
+import timer from "../slices/timerSlice/timerSlice";
+import volume from "../slices/volumeSlice/volumeSlice";
 
 const store = configureStore({
-  reducer: { timer },
+  reducer: { timer, volume },
   devTools: process.env.NODE_ENV !== "production",
 });
 

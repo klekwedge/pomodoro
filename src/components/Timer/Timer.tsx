@@ -18,7 +18,7 @@ import {
   changeMode,
   incCurrentRound,
   resetCurrentRound,
-} from "../../slices/timerSlice";
+} from "../../slices/timerSlice/timerSlice";
 
 dayjs.extend(duration);
 

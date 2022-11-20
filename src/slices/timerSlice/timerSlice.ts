@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ModeType } from "../types/types";
+import { ModeType } from "../../types/types";
 import { TimerState } from "./timerSlice.types";
 
 const initialState: TimerState = {
@@ -9,11 +9,6 @@ const initialState: TimerState = {
   isAutoStartBreaks: true,
   isAutoStartPomodoros: true,
   longBreakInterval: 4,
-  alarmSound: "digital",
-  alarmVolume: 50,
-  repeat: 1,
-  tickingSound: "none",
-  tickingVolume: 50,
   currentRound: 1,
   mode: "focus",
 };

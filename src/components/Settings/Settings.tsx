@@ -33,7 +33,7 @@ import {
   changeLongBreakInterval,
   changeLongBreakTime,
   changeShortBreakTime,
-} from "../../slices/timerSlice";
+} from "../../slices/timerSlice/timerSlice";
 
 interface SettingsProps {
   isOpenSetting: boolean;
@@ -49,10 +49,13 @@ const Settings = ({ isOpenSetting, onCloseSetting }: SettingsProps) => {
     isAutoStartBreaks,
     isAutoStartPomodoros,
     longBreakInterval,
+  } = useAppSelector((state) => state.timer);
+
+  const {
     alarmVolume,
     repeat,
     tickingVolume,
-  } = useAppSelector((state) => state.timer);
+  } = useAppSelector((state) => state.volume);
 
   return (
     <Modal isOpen={isOpenSetting} onClose={onCloseSetting}>
