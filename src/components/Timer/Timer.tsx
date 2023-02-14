@@ -24,6 +24,13 @@ import {
 
 dayjs.extend(duration);
 
+import { player } from "../../hooks/useSound";
+
+const slowTicking = player({
+  src: "/public/sounds/ticking-slow.mp3",
+  volume: 50,
+});
+
 interface TimerProps {
   wrapperPageRef: React.RefObject<HTMLDivElement>;
 }
@@ -35,6 +42,8 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const longBreakMode = useRef<HTMLButtonElement>(null);
 
   let timerId: NodeJS.Timer | null = null;
+
+  const buttonPressAudio = new Audio("/public/sounds/button-press.wav");
 
   const {
     focusTime,
@@ -48,10 +57,16 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   } = useAppSelector((state) => state.timer);
   const dispatch = useAppDispatch();
 
+  const { tickingVolume } = useAppSelector((state) => state.volume);
+
+  useEffect(() => {
+    slowTicking.setVolume(tickingVolume);
+  }, [tickingVolume]);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [textContentButton, setTextContentButton] = useState("Start");
 
-  const [timeLeft, setTimeLeft] = useState(focusTime * 5);
+  const [timeLeft, setTimeLeft] = useState(focusTime * 60);
 
   const skipTimer = () => {
     onClose();
@@ -81,11 +96,13 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
     setTextContentButton("Start");
     updateTimeLeftMode();
 
+    slowTicking.stop();
+
     if (mode === "focus") {
       dispatch(
         addProgress({
           date: new Date().toLocaleDateString(),
-          minutes: focusTime * 5,
+          minutes: focusTime * 60,
           id: uuidv4(),
         })
       );
@@ -118,13 +135,13 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const updateTimeLeftMode = () => {
     switch (mode) {
       case "focus":
-        setTimeLeft(focusTime * 5);
+        setTimeLeft(focusTime * 60);
         break;
       case "shortBreak":
-        setTimeLeft(shortBreakTime * 5);
+        setTimeLeft(shortBreakTime * 60);
         break;
       case "longBreak":
-        setTimeLeft(longBreakTime * 5);
+        setTimeLeft(longBreakTime * 60);
         break;
       default:
         setTimeLeft(focusTime * 60);
@@ -147,7 +164,6 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   const countdownTimer = () => {
     if (timeLeft > 0) {
       setTimeLeft((prev) => prev - 1);
-      
     }
     if (timeLeft <= 0) {
       resetTimer();
@@ -162,10 +178,13 @@ const Timer = ({ wrapperPageRef }: TimerProps) => {
   }, [textContentButton, timeLeft]);
 
   const toggleTimer = () => {
+    buttonPressAudio.play();
     if (textContentButton === "Start") {
       setTextContentButton("Stop");
+      slowTicking.play();
     } else if (textContentButton === "Stop") {
       setTextContentButton("Start");
+      slowTicking.stop();
     }
   };
 

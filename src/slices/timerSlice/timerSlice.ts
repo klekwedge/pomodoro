@@ -3,9 +3,9 @@ import { ModeType } from "../../types/types";
 import { TimerState } from "./timerSlice.types";
 
 const initialState: TimerState = {
-  focusTime: 1,
-  shortBreakTime: 2,
-  longBreakTime: 3,
+  focusTime: 20,
+  shortBreakTime: 5,
+  longBreakTime: 10,
   isAutoStartBreaks: true,
   isAutoStartPomodoros: true,
   longBreakInterval: 4,
