@@ -30,7 +30,7 @@
 ### Ссылки
 
 - [Ссылка на проект](https://github.com/klekwedge/pomodoro)
-- [Деплой](klekwedge-pomodoro.vercel.app)
+- [Деплой](https://klekwedge-pomodoro.vercel.app/)
 
 ## Мой процесс
 
