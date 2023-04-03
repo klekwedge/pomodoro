@@ -1,7 +1,5 @@
 import {
-  Flex,
   Button,
-  Heading,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -12,14 +10,8 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel,
 } from "@chakra-ui/react";
 
-import {
-  AiOutlineClockCircle,
-  AiOutlineCalendar,
-  AiOutlineFire,
-} from "react-icons/ai";
 import Detail from "../Detail/Detail";
 import Summary from "../Summary/Summary";
 
