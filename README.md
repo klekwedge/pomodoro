@@ -1,40 +1,40 @@
 # Pomodoro
 
-You can also read this README in [русский](https://github.com/klekwedge/pomodoro/blob/main/README.RU.md)
+**You can also read this README in [English](https://github.com/klekwedge/cv/blob/main/README.EN.md).**
 
-## Table of contents
+## Оглавление
 
-- [Deployment instructions](#deployment-instructions)
-- [Overview](#overview)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-- [Author](#author)
+- [Инструкции по развертыванию](#инструкции-по-развертыванию)
+- [Обзор](#обзор)
+  - [Скриншот](#скриншот)
+  - [Ссылки](#ссылки)
+- [Мой процесс](#мой-процесс)
+  - [Стек](#стек)
+  - [Что я узнал](#что-я-узнал)
+- [Автор](#автор)
 
-## Deployment instructions
+## Инструкции по развертыванию
 
-**To run the project, you need to have [npm](https://nodejs.org/en/) and [git](https://git-scm.com/downloads) installed on your computer**
+**Для запуска проекта на вашем компьютере должны быть установлены [npm](https://nodejs.org/en/) и [git](https://git-scm.com/downloads)**
 
-1. Make a clone of this repository ```git clone https://github.com/klekwedge/pomodoro.git```
-2. Install all required npm packages with ```npm i```
-3. Run the project with the command ```npm run dev``
+1. Сделайте клон этого репозитория ```git clone https://github.com/klekwedge/pomodoro.git```
+2. Установите все необходимые пакеты npm с помощью ```npm i```
+3. Запустите проект командой ```npm run dev```
 
-## Overview
+## Обзор
 
-### Screenshot
+### Скриншот
 
-![Main screen](./preview/screenshot.png)
+![Главный экран](./preview/screenshot.png)
 
-### Links
+### Ссылки
 
-- [Solution URL](https://github.com/klekwedge/pomodoro)
-- [Live Site URL](https://klekwedge-pomodoro.vercel.app/)
+- [Ссылка на проект](https://github.com/klekwedge/pomodoro)
+- [Деплой](https://klekwedge-pomodoro.vercel.app/)
 
-## My process
+## Мой процесс
 
-### Built with
+### Стек
 
 - React
 - Redux Toolkit
@@ -44,12 +44,12 @@ You can also read this README in [русский](https://github.com/klekwedge/p
 - SCSS
 - Vite
 
-### What I learned
+### Что я узнал
 
-I learned how to use Vite, Redux Toolkit, TypeScript in a React project. I learned how to work with a timer, I learned how to use sounds when the user interacts with the interface, I learned how to change the favicon depending on the timer mode, how to type redux components and functions, how to use interfaces and types, I got a better understanding of the Chakra UI library.
+Я научился использовать Vite, Redux Toolkit, TypeScript в проекте React. Я научился работать с таймером, научился использовать звуки при взаимодействии пользователя с интерфейсом, научился менять фавиконку в зависимости от режима таймера, как типизировать срезы Redux и функции, как использовать интерфейсы и типы, я стал лучше разбираться в библиотеке пользовательского интерфейса Chakra.
 
-## Author
+## Автор
 
-- [Website](https://klekwedge-cv.vercel.app/)
+- [Вебсайт](https://klekwedge-cv.vercel.app/)
 - [Linkedin](https://www.linkedin.com/in/klekwedge/)
 - [Facebook](https://www.facebook.com/klekwedge)
