@@ -1,6 +1,6 @@
 # Pomodoro
 
-**You can also read this README in [English](https://github.com/klekwedge/cv/blob/main/README.EN.md).**
+**You can also read this README in [English](https://github.com/klekwedge/pomodoro/blob/main/README.EN.md).**
 
 ## Оглавление
 
